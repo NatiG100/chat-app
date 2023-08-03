@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode:"class",
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,6 +16,15 @@ module.exports = {
       animation:{
         'slide-in':'slide-in 100ms ease-in 1',
         'slide-out':'slide-out 100ms ease-in 1 forwards',
+      },
+      colors:{
+        'dark':"#1D232F",
+        'dark-surface':"#30394D",
+        "primary":"#818CF8",
+        "dark-text":"#FFFFFF",
+        'light':"#E7E7E7",
+        'light-surfce':"#D7DAE0",
+        "light-text":"#212224",
       },
       keyframes:{
         'slide-in':{
