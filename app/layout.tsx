@@ -15,9 +15,10 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   sidebar,
+  ...other
 }: {
-  children: React.ReactNode,
-  sidebar: React.ReactNode,
+  children: React.ReactNode
+  sidebar: React.ReactNode
 }) {
   const [isOpen,setIsOpen] = useState(false);
   return (
