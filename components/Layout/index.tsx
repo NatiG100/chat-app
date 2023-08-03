@@ -1,10 +1,10 @@
-import { ReactElement, useEffect } from "react"
+import { ReactElement, ReactNode, useEffect } from "react"
 import Backdrop from "../surfaces/Backdrop"
 import useAnimateOnWillUnmount from "@/hooks/useAnimateOnWillUnmount"
 
 type TypeLayoutProps = {
-    sidebar:ReactElement,
-    body:ReactElement,
+    sidebar:ReactNode,
+    body:ReactNode,
     sidebarOpen:boolean,
     closeSideBar:()=>void
 }

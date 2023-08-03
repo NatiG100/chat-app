@@ -1,20 +1,20 @@
 import Image from 'next/image'
-import {MdOutlineDarkMode as DarkIcon,MdNotificationsNone as NotificationIcon} from 'react-icons/md'
+import {IoNotificationsOutline as NotificationIcon,IoMoonOutline as DarkIcon}  from 'react-icons/io5'
 import BaseButton from '../uiElements/BaseButton'
 type TypeNavbarProps = {
-    children:React.ReactNode
+    children?:React.ReactNode
 }
 
 export default function Navbar({children}:TypeNavbarProps){
     return(
-        <div className="h-max px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light">
+        <div className="h-[65px] px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 dark:border-black/25">
             {children||<div></div>}
-            <div className='flex gap-6 items-center text-[26px] text-light-text dark:text-dark-text'>
+            <div className='flex gap-5 items-center text-[23px] text-light-text dark:text-dark-text'>
                 <BaseButton>
-                    <DarkIcon/>
+                    <DarkIcon className="stroke-1"/>
                 </BaseButton>
                 <BaseButton>
-                    <NotificationIcon/>
+                    <NotificationIcon className="stroke-1"/>
                 </BaseButton>
                 <Image 
                     height="1000" 
