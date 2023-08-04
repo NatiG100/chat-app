@@ -1,6 +1,5 @@
 "use client"
 import Layout from '@/components/Layout'
-import './../globals.css'
 import { useSelector,useDispatch } from 'react-redux'
 import { AppDispath, RootState } from '@/store'
 import { TypeLayout, closeSidebar, openSidebar } from '@/store/layoutSlice'
