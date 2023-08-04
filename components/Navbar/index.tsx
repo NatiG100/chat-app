@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import {IoNotificationsOutline as NotificationIcon,IoMoonOutline as DarkIcon}  from 'react-icons/io5'
 import {FiSun as LightIcon} from 'react-icons/fi'
-import BaseButton from '../uiElements/BaseButton'
+import BaseButton from '../uiElements/buttons/BaseButton'
 type TypeNavbarProps = {
     children?:React.ReactNode
 }

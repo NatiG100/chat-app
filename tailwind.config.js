@@ -22,9 +22,12 @@ module.exports = {
         'dark-surface':"#30394D",
         "primary":"#818CF8",
         "dark-text":"#FFFFFF",
+        "dark-text-darker":"#8A909A",
         'light':"#E7E7E7",
         'light-surfce':"#D7DAE0",
         "light-text":"#212224",
+        "light-text-lighter":"#6A7378",
+
       },
       keyframes:{
         'slide-in':{
