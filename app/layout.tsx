@@ -50,14 +50,14 @@ function Root({children,sidebar}:{
       <body className={inter.className}>
         <Layout
           body={
-            <div className='h-full w-full bg-light-surfce dark:bg-dark-surface'>
+            <div className='h-full w-full bg-light-surfce dark:bg-dark-surface grid grid-rows-[max-content,1fr]'>
               <Navbar>
                   <div className="flex items-center gap-3">
                     <div className="md:hidden block">
                         <BaseButton 
                           attr={{onClick:()=>{dispatch(openSidebar())}}}
                         >
-                          <HiMenu className="text-xl text-light-text dark:text-dark-text"/>
+                          <HiMenu className="text-xl text-primary"/>
                         </BaseButton>
                     </div>
                     <BaseButton 
@@ -65,7 +65,7 @@ function Root({children,sidebar}:{
                     >
                         <MdArrowBack className="text-xl text-light-text dark:text-dark-text"/>
                     </BaseButton>
-                    <p className='text-light-text-lighter dark:text-dark-text-darker text-lg'>{title}</p>
+                    <p className='text-light-text-lighter dark:text-dark-text-darker text-base sm:text-lg'>{title}</p>
                   </div>
               </Navbar>
               {children}

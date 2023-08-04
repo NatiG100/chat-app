@@ -16,18 +16,17 @@ export default function Navbar({children}:TypeNavbarProps){
     return(
         <div className="h-[65px] px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 border-black/20">
             {children||<div></div>}
-            <div className='flex gap-5 items-center text-[23px] text-light-text dark:text-dark-text'>
-                
-                    <BaseButton attr={{onClick:(e)=>{dispatch(toggleTheme())}}}>
-                        {preference.theme==="dark"?<DarkIcon className="stroke-1"/>:<LightIcon className="stroke-1"/>}
-                    </BaseButton>
+            <div className='flex gap-5 items-center lg:text-[23px] text-[18px] text-light-text dark:text-dark-text'>
+                <BaseButton attr={{onClick:(e)=>{dispatch(toggleTheme())}}}>
+                    {preference.theme==="dark"?<DarkIcon className="stroke-1"/>:<LightIcon className="stroke-1"/>}
+                </BaseButton>
                 <BaseButton>
                     <NotificationIcon className="stroke-1"/>
                 </BaseButton>
                 <div className='flex items-center gap-2'>
                     <div className='flex flex-col items-end'>
-                        <p className='text-base'>John Doe</p>
-                        <p className='text-sm font-extralight italic dark:text-gray-400 text-gray-600'>+251 966 773 844</p>
+                        <p className='text-base hidden sm:block'>John Doe</p>
+                        <p className='text-sm font-extralight italic dark:text-gray-400 text-gray-600 hidden lg:block'>+251 966 773 844</p>
                     </div>
                     <Link href={"/settings"}>
                         <Image 
@@ -35,7 +34,7 @@ export default function Navbar({children}:TypeNavbarProps){
                             width="1000" 
                             alt="profile" 
                             src="/img.jpg"
-                            className='h-14 w-14 rounded-full object-cover border-2 border-black/20'
+                            className='lg:h-14 lg:w-14 h-8 w-8 rounded-full object-cover border-2 border-black/20'
                         />
                     </Link>
                 </div>
