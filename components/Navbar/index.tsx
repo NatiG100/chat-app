@@ -14,9 +14,9 @@ export default function Navbar({children}:TypeNavbarProps){
     const dispatch = useDispatch<AppDispath>();
     const preference = useSelector<RootState,TypePreference>((state)=>state.preference)
     return(
-        <div className="h-[65px] px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 border-black/20">
+        <div className="h-[65px] px-4 sm:px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 border-black/20">
             {children||<div></div>}
-            <div className='flex gap-5 items-center lg:text-[23px] text-[18px] text-light-text dark:text-dark-text'>
+            <div className='flex sm:gap-5 gap-2 items-center lg:text-[23px] text-[18px] text-light-text dark:text-dark-text'>
                 <BaseButton attr={{onClick:(e)=>{dispatch(toggleTheme())}}}>
                     {preference.theme==="dark"?<DarkIcon className="stroke-1"/>:<LightIcon className="stroke-1"/>}
                 </BaseButton>
