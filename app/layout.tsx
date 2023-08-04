@@ -4,9 +4,16 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
-import { Provider,useSelector } from 'react-redux'
-import store, { RootState } from '@/store'
+import { Provider,useSelector,useDispatch } from 'react-redux'
+import store, { AppDispath, RootState } from '@/store'
 import { TypePreference } from '@/store/preferenceSlice'
+import { TypeLayout, closeSidebar, openSidebar } from '@/store/layoutSlice'
+import BaseButton from '@/components/uiElements/buttons/BaseButton'
+import Navbar from '@/components/Navbar'
+import {HiMenu} from 'react-icons/hi'
+import {MdArrowBack} from 'react-icons/md'
+import usePageTitle from '@/hooks/usePageTitle'
+import { useRouter } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,16 +40,40 @@ function Root({children,sidebar}:{
   children: React.ReactNode
   sidebar: React.ReactNode
 }){
-  const [isOpen,setIsOpen] = useState(false);
+  const layout = useSelector<RootState,TypeLayout>((state)=>state.layout)
+  const dispatch = useDispatch<AppDispath>()
   const preference = useSelector<RootState,TypePreference>((state)=>(state.preference))
+  const title = usePageTitle();
+  const router = useRouter();
   return(
     <html lang="en" className={preference.theme}>
       <body className={inter.className}>
         <Layout
-          body={children}
+          body={
+            <div className='h-full w-full bg-light-surfce dark:bg-dark-surface'>
+              <Navbar>
+                  <div className="flex items-center gap-3">
+                    <div className="md:hidden block">
+                        <BaseButton 
+                          attr={{onClick:()=>{dispatch(openSidebar())}}}
+                        >
+                          <HiMenu className="text-xl text-light-text dark:text-dark-text"/>
+                        </BaseButton>
+                    </div>
+                    <BaseButton 
+                        attr={{onClick:router.back}}
+                    >
+                        <MdArrowBack className="text-xl text-light-text dark:text-dark-text"/>
+                    </BaseButton>
+                    <p className='text-light-text-lighter dark:text-dark-text-darker text-lg'>{title}</p>
+                  </div>
+              </Navbar>
+              {children}
+            </div>
+          }
           sidebar={sidebar}
-          closeSideBar={()=>{setIsOpen(false)}}
-          sidebarOpen={isOpen}
+          closeSideBar={()=>{dispatch(closeSidebar())}}
+          sidebarOpen={layout.sidebarOpen}
         />
       </body>
     </html>

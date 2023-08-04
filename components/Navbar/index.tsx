@@ -9,6 +9,7 @@ type TypeNavbarProps = {
 import {useDispatch,useSelector} from 'react-redux'
 import { TypePreference, toggleTheme } from '@/store/preferenceSlice'
 import { AppDispath, RootState } from '@/store'
+import Link from 'next/link'
 export default function Navbar({children}:TypeNavbarProps){
     const dispatch = useDispatch<AppDispath>();
     const preference = useSelector<RootState,TypePreference>((state)=>state.preference)
@@ -28,13 +29,15 @@ export default function Navbar({children}:TypeNavbarProps){
                         <p className='text-base'>John Doe</p>
                         <p className='text-sm font-extralight italic dark:text-gray-400 text-gray-600'>+251 966 773 844</p>
                     </div>
-                    <Image 
-                        height="1000" 
-                        width="1000" 
-                        alt="profile" 
-                        src="/img.jpg"
-                        className='h-14 w-14 rounded-full object-cover border-2 border-black/20'
-                    />
+                    <Link href={"/settings"}>
+                        <Image 
+                            height="1000" 
+                            width="1000" 
+                            alt="profile" 
+                            src="/img.jpg"
+                            className='h-14 w-14 rounded-full object-cover border-2 border-black/20'
+                        />
+                    </Link>
                 </div>
             </div>
         </div>

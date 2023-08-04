@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
 import preferenceReducer from './preferenceSlice'
+import layoutReducer from './layoutSlice';
 const store = configureStore({
     reducer:{
-        preference:preferenceReducer
+        preference:preferenceReducer,
+        layout:layoutReducer,
     }
 });
 export type AppDispath = typeof store.dispatch;

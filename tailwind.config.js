@@ -27,7 +27,7 @@ module.exports = {
         'light-surfce':"#D7DAE0",
         "light-text":"#212224",
         "light-text-lighter":"#6A7378",
-
+        "warning":"#D94D7F"
       },
       keyframes:{
         'slide-in':{
