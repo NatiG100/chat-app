@@ -21,3 +21,9 @@ body {
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box; 
 }
+input:autofill{
+  background: #0003;
+}
+input{
+  filter: none;
+}

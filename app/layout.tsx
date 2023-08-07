@@ -6,17 +6,21 @@ import { Provider, useSelector } from "react-redux";
 import { Inter } from 'next/font/google'
 import { Metadata } from "next";
 import './globals.css'
+import {QueryClient,QueryClientProvider} from 'react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
     title: 'Chat app',
     description: 'A chat application',
-  }
+}
+const queryClient = new QueryClient({defaultOptions:{mutations:{retry:0},queries:{retry:3}}});
 export default function LayoutWithProvider({children}:{children:ReactNode}){
     return(
-        <Provider store={store}>
-            <RootLayout>{children}</RootLayout>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                <RootLayout>{children}</RootLayout>
+            </Provider>
+        </QueryClientProvider>
     )
 }
 

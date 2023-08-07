@@ -2,10 +2,11 @@ export type TypeUser = {
     id:number,
     firstName:string,
     lastName?:string,
-    userName:string,
+    username:string,
     phoneNumber:string,
     profileImg?:string,
     status?:string,
+    password?:string
 }
 
 export type TypeGroup = {
