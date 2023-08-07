@@ -4,6 +4,7 @@ import Button from "@/components/uiElements/buttons";
 import UserService from "@/services/userService";
 import { TypeErrorRes } from "@/types/api";
 import { TypeUser } from "@/types/enteties";
+import Link from "next/link";
 import {useForm} from 'react-hook-form'
 import {useMutation} from 'react-query'
 
@@ -73,10 +74,15 @@ export default function Register(){
                     text="Create Password *"
                     error={errors.password?.message}
                 />
+                <p className="mx-2 text-warning font-light animate-pulse">
+                    {error&&(Array.isArray(error.message)?error.message.join(',\n'):error.message)}
+                </p>
                 <Button>Register</Button>
             </form>
-            <p className="mx-2 text-warning font-light animate-pulse">
-                {error&&(Array.isArray(error.message)?error.message.join(',\n'):error.message)}
+            <p className="text-sm font-light text-gray-600 dark:text-gray-300">Or
+                <Link href={"/login"} className=" text-primary font-semibold hover:underline transition-all ml-2" replace>
+                    Sign in
+                </Link> if you already have an account
             </p>
         </> 
     );
