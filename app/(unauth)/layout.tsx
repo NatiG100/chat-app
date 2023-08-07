@@ -17,7 +17,7 @@ export default function UnautLayout({children}:{children:ReactNode}){
                     {preference.theme==="dark"?<DarkIcon className="stroke-1"/>:<LightIcon className="stroke-1"/>}
                 </BaseButton>
             </div>
-            <div className="transition-all w-full max-w-xl bg-light dark:bg-dark-surface p-9 shadow-lg h-full max-h-[680px] overflow-y-auto">
+            <div className="transition-all w-full max-w-xl bg-light dark:bg-dark-surface p-9 shadow-md max-h-full  overflow-y-auto rounded-none sm:rounded-md">
                 {children}
             </div>
         </div>

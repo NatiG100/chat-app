@@ -1,3 +1,8 @@
+export type TypeLogin = {
+    username:string,
+    password:string,
+}
+
 export enum permissions{
     ADD_MEMBER=1,
     CHANGE_MEMBER_STATUS=2,
