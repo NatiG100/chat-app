@@ -1,12 +1,16 @@
 "use client"
 import store, { RootState } from "@/store";
 import { TypePreference } from "@/store/preferenceSlice";
-import { ReactNode } from "react";
-import { Provider, useSelector } from "react-redux";
+import { ReactNode, useEffect } from "react";
+import { Provider, useSelector,useDispatch } from "react-redux";
 import { Inter } from 'next/font/google'
 import { Metadata } from "next";
 import './globals.css'
-import {QueryClient,QueryClientProvider} from 'react-query'
+import {QueryClient,QueryClientProvider,useQuery} from 'react-query'
+import AuthService from "@/services/authService";
+import { TypeUser } from "@/types/enteties";
+import { TypeErrorRes } from "@/types/api";
+import { login } from "@/store/authStore";
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -25,7 +29,14 @@ export default function LayoutWithProvider({children}:{children:ReactNode}){
 }
 
 function RootLayout({children}:{children:ReactNode}){
+    const dispatch = useDispatch();
     const preference = useSelector<RootState,TypePreference>((state)=>(state.preference))
+    const {data,isLoading,isError,error} = useQuery<TypeUser,TypeErrorRes>('me',AuthService.me);
+    useEffect(()=>{
+        if(data){
+            dispatch(login(data))
+        }
+    },[data])
     return (
         <html lang="en" className={preference.theme}>
             <body className={inter.className}>

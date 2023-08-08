@@ -7,8 +7,14 @@ import { TypeUser } from "@/types/enteties";
 import Link from "next/link";
 import {useForm} from 'react-hook-form'
 import {useMutation} from 'react-query'
+import {useRouter} from 'next/navigation'
+import useUser from "@/hooks/useUser";
+import { useEffect } from "react";
+import useAuthRedirector from "@/hooks/useAuthRedirector";
+import { useDispatch } from "react-redux";
+import {login as loginAction} from '@/store/authStore'
 
-export default function Register(){
+export default function Login(){
     const {
         data,
         error,
@@ -19,6 +25,13 @@ export default function Register(){
     const onRegister = (user:TypeLogin)=>{
         login(user);
     }
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        if(data){
+            dispatch(loginAction(data));
+        }
+    },[data])
+    useAuthRedirector("unauth");
     return(
         <>
             <p className="text-primary text-lg md:text-xl mb-6">Login</p>

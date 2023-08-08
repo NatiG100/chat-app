@@ -9,6 +9,7 @@ import {HiMenu} from 'react-icons/hi'
 import {MdArrowBack} from 'react-icons/md'
 import usePageTitle from '@/hooks/usePageTitle'
 import { useRouter } from 'next/navigation'
+import useAuthRedirector from '@/hooks/useAuthRedirector'
 
 
 export default function AuthLayout({children,sidebar}:{
@@ -19,6 +20,7 @@ export default function AuthLayout({children,sidebar}:{
   const dispatch = useDispatch<AppDispath>()
   const title = usePageTitle();
   const router = useRouter();
+  useAuthRedirector("auth");
   return(
       <Layout
         body={

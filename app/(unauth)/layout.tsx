@@ -1,11 +1,12 @@
 "use client"
 import BaseButton from "@/components/uiElements/buttons/BaseButton";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import {IoMoonOutline as DarkIcon}  from 'react-icons/io5'
 import {FiSun as LightIcon} from 'react-icons/fi'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispath, RootState } from "@/store";
 import { TypePreference, toggleTheme } from "@/store/preferenceSlice";
+import { TypeUser } from "@/types/enteties";
 
 export default function UnautLayout({children}:{children:ReactNode}){
     const dispatch = useDispatch<AppDispath>();

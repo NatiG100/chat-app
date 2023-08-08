@@ -1,6 +1,7 @@
 "use client"
 import Input from "@/components/uiElements/Textfield";
 import Button from "@/components/uiElements/buttons";
+import useAuthRedirector from "@/hooks/useAuthRedirector";
 import UserService from "@/services/userService";
 import { TypeErrorRes } from "@/types/api";
 import { TypeUser } from "@/types/enteties";
@@ -19,6 +20,7 @@ export default function Register(){
     const onRegister = (user:TypeUser)=>{
         reqRegister(user);
     }
+    useAuthRedirector("unauth");
     return(
         <>
             <p className="text-primary text-lg md:text-xl mb-6">Register</p>

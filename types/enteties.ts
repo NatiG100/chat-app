@@ -5,7 +5,7 @@ export type TypeUser = {
     username:string,
     phoneNumber:string,
     profileImg?:string,
-    status?:string,
+    status?:"INACTIVE"|"ACTIVE"|"SUSPENDED",
     password?:string
 }
 
