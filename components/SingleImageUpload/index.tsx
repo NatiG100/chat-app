@@ -42,7 +42,7 @@ export default function SingleImageUpload({setFile=()=>{},setImg,img}:TypeSingle
             </div>}
             <img
                 src={img?img:""}
-                alt="avatar"
+                alt=""
                 width={400}
                 height={400}
                 className="absolute w-full h-full top-0 left-0 object-cover rounded-full"
@@ -55,24 +55,24 @@ export default function SingleImageUpload({setFile=()=>{},setImg,img}:TypeSingle
                     !img&&
                     <div className="
                         absolute top-0 right-0 h-full w-full flex items-center justify-center
-                        border-2 border-gray-300 border-dashed
+                        border-2 border-gray-300 border-dashed rounded-full
                     ">
                     </div>
                 }
                 {
                     
                     !isDragActive?
-                        <div className="h-full w-full flex items-center justify-center opacity-0 hover:opacity-100 transition-all">
-                            <p className="text-xl text-indigo-50 bg-primary/50 px-4 py-2 rounded-full">Drag 'n' drop an image here, or click</p>
+                        <div className="h-full w-full rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-all p-4">
+                            <p className=" text-indigo-50 bg-primary/50 px-4 py-2 rounded-full">Drag 'n' drop an image here, or click</p>
                         </div>:
                     isDragAccept?
-                        <div className="h-full w-full flex items-center justify-center  bg-primary/50 border-2 border-dashed">
-                            <p className="text-xl text-primary dark:text-indigo-50">drop the image here</p>
+                        <div className="h-full w-full rounded-full flex items-center justify-center  bg-primary/50 border-2 border-dashed">
+                            <p className=" text-primary dark:text-indigo-50">drop the image here</p>
                         </div>:
-                        <div className="h-full w-full flex flex-col items-center justify-center  bg-warning/50 border-2 border-warning border-dashed">
-                            <p className="text-xl text-warning dark:text-red-100">The file is not acceptable!</p>
-                            <p className="text-xl text-warning dark:text-red-100">check the file type</p>
-                            <p className="text-xl text-warning dark:text-red-100">(multiple files are not also acceptable)</p>
+                        <div className="h-full w-full rounded-full flex flex-col items-center justify-center  bg-warning/50 border-2 border-warning border-dashed">
+                            <p className=" text-warning dark:text-red-100">The file is not acceptable!</p>
+                            <p className=" text-warning dark:text-red-100">check the file type</p>
+                            <p className=" text-warning dark:text-red-100">(multiple files are not also acceptable)</p>
                         </div>
                 }
             </div>
