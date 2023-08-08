@@ -2,6 +2,11 @@ export type TypeLogin = {
     username:string,
     password:string,
 }
+export type TypeChangePassword = {
+    oldPassword:string,
+    newPassword:string,
+    confirmPassword:string,
+}
 
 export enum permissions{
     ADD_MEMBER=1,

@@ -10,7 +10,9 @@ import {useDispatch,useSelector} from 'react-redux'
 import { TypePreference, toggleTheme } from '@/store/preferenceSlice'
 import { AppDispath, RootState } from '@/store'
 import Link from 'next/link'
+import useUser from '@/hooks/useUser'
 export default function Navbar({children}:TypeNavbarProps){
+    const user = useUser();
     const dispatch = useDispatch<AppDispath>();
     const preference = useSelector<RootState,TypePreference>((state)=>state.preference)
     return(
@@ -25,8 +27,8 @@ export default function Navbar({children}:TypeNavbarProps){
                 </BaseButton>
                 <div className='flex items-center gap-2'>
                     <div className='flex flex-col items-end'>
-                        <p className='text-base hidden sm:block'>John Doe</p>
-                        <p className='text-sm font-extralight italic dark:text-gray-400 text-gray-600 hidden lg:block'>+251 966 773 844</p>
+                        <p className='text-base hidden sm:block'>{user?.firstName} {user?.lastName}</p>
+                        <p className='text-sm font-extralight italic dark:text-gray-400 text-gray-600 hidden lg:block'>{user?.phoneNumber}</p>
                     </div>
                     <Link href={"/settings"}>
                         <Image 

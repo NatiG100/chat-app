@@ -1,5 +1,5 @@
 import axiosClient from "@/client";
-import { TypeErrorRes, TypeLogin, TypeSuccessRes } from "@/types/api";
+import { TypeChangePassword, TypeErrorRes, TypeLogin, TypeSuccessRes } from "@/types/api";
 import { TypeUser } from "@/types/enteties";
 
 export default class AuthService{
@@ -14,5 +14,8 @@ export default class AuthService{
     }
     static async activate({code}:{code:number}){
         return axiosClient.patch<TypeErrorRes,TypeSuccessRes>('/auth/activate',{code},{headers:{Authorization:true},withCredentials:true})
+    }
+    static async changePassword(data:TypeChangePassword){
+        return axiosClient.patch<TypeErrorRes,TypeSuccessRes>('/auth',data,{headers:{Authorization:true},withCredentials:true});
     }
 }
