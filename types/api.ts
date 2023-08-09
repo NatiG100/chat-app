@@ -1,3 +1,5 @@
+import { TypeUser } from "./enteties"
+
 export type TypeLogin = {
     username:string,
     password:string,
@@ -7,7 +9,9 @@ export type TypeChangePassword = {
     newPassword:string,
     confirmPassword:string,
 }
-
+export type UpdateProfile = Omit<Partial<TypeUser>,"profileImg">&{
+    profileImg:File|null
+}
 export enum permissions{
     ADD_MEMBER=1,
     CHANGE_MEMBER_STATUS=2,

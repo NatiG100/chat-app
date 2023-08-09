@@ -42,7 +42,9 @@ export default function AuthLayout({children,sidebar}:{
                   <p className='text-light-text-lighter dark:text-dark-text-darker text-base sm:text-lg'>{title}</p>
                 </div>
             </Navbar>
-            {children}
+            <div className='h-full w-full overflow-y-auto'>
+              {children}
+            </div>
           </div>
         }
         sidebar={sidebar}

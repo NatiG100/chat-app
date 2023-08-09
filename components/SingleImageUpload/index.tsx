@@ -41,7 +41,7 @@ export default function SingleImageUpload({setFile=()=>{},setImg,img}:TypeSingle
                 }}}><FaWindowClose/></BaseButton>
             </div>}
             <img
-                src={img?img:""}
+                src={img?img:"/noProfile.png"}
                 alt=""
                 width={400}
                 height={400}
@@ -55,7 +55,7 @@ export default function SingleImageUpload({setFile=()=>{},setImg,img}:TypeSingle
                     !img&&
                     <div className="
                         absolute top-0 right-0 h-full w-full flex items-center justify-center
-                        border-2 border-gray-300 border-dashed rounded-full
+                        rounded-full
                     ">
                     </div>
                 }

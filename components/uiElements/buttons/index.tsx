@@ -10,6 +10,7 @@ export default function Button ({attr,children,my="my-4"}:TypeButtonProps){
             dark:hover:bg-white/10 hover:bg-black/10 p-[6px] 
             transition-all hover:shadow-sm
             border-2 rounded-md border-primary text-primary w-full py-2 text-base md:text-lg ${my}
+            disabled:opacity-60
             `}
             {...attr}
         >
