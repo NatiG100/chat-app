@@ -16,7 +16,7 @@ export default function Navbar({children}:TypeNavbarProps){
     const dispatch = useDispatch<AppDispath>();
     const preference = useSelector<RootState,TypePreference>((state)=>state.preference)
     return(
-        <div className="h-[65px] px-4 sm:px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 border-black/20">
+        <div className="h-[65px] px-4 sm:px-8 py-2 flex items-center justify-between w-full dark:bg-dark bg-light border-b-2 border-black/10">
             {children||<div></div>}
             <div className='flex sm:gap-5 gap-2 items-center lg:text-[23px] text-[18px] text-light-text dark:text-dark-text'>
                 <BaseButton attr={{onClick:(e)=>{dispatch(toggleTheme())}}}>
@@ -35,7 +35,7 @@ export default function Navbar({children}:TypeNavbarProps){
                             height="1000" 
                             width="1000" 
                             alt="profile" 
-                            src="/img.jpg"
+                            src={`${user?.profileImg?"https://ucarecdn.com/"+user.profileImg+"/":"/noProfile.png"}`}
                             className='lg:h-14 lg:w-14 h-8 w-8 rounded-full object-cover border-2 border-black/20'
                         />
                     </Link>

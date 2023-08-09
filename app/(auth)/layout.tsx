@@ -24,7 +24,7 @@ export default function AuthLayout({children,sidebar}:{
   return(
       <Layout
         body={
-          <div className='h-full w-full bg-light-surfce dark:bg-dark-surface grid grid-rows-[max-content,1fr]'>
+          <div className='h-screen w-full bg-light-surfce dark:bg-dark-surface grid grid-rows-[max-content,1fr]'>
             <Navbar>
                 <div className="flex items-center gap-1 sm:gap-3">
                   <div className="md:hidden block">

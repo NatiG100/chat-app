@@ -15,7 +15,7 @@ import { useMutation } from "react-query";
 export default function Setting() {
   const searchParams = useSearchParams();
   return (
-      <div className='h-full w-full bg-light-surfce dark:bg-dark-surface'>
+      <div className=' w-full bg-light-surfce dark:bg-dark-surface'>
         {(searchParams.get('tab')==="password")? <PasswordSetting/>:<ProfileSetting/>}
       </div>
   )
