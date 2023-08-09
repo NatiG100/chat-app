@@ -15,8 +15,8 @@ export default function Layout({sidebar,body,sidebarOpen,closeSideBar}:TypeLayou
         console.log(sidebarOpen);
     },[sidebarOpen])
     return(
-        <div className="transition-all duration-400 grid grid-cols-1 md:grid-cols-[2fr,3fr] lg:grid-cols-[2fr,5fr] xl:grid-cols-[1fr,3fr] 2xl:grid-cols-[1fr,4fr] h-screen">
-            <div className="bg-red-600 hidden md:block w-full h-full">
+        <div className=" w-full transition-all duration-400 grid grid-cols-1 md:grid-cols-[2fr,3fr] lg:grid-cols-[2fr,5fr] xl:grid-cols-[1fr,3fr] 2xl:grid-cols-[1fr,4fr] h-screen">
+            <div className="hidden md:block w-full h-full overflow-x-hidden overflow-y-auto">
                 {sidebar}
             </div>
             {shouldRender&&<Backdrop 
@@ -24,11 +24,11 @@ export default function Layout({sidebar,body,sidebarOpen,closeSideBar}:TypeLayou
                 onClose={closeSideBar}
                 onAnimationEnd={onAnimationEnd}
             >
-                <div className="bg-red-600 w-full max-w-md h-full" onClick={(e)=>{e.stopPropagation()}}>
+                <div className="w-full max-w-md h-full" onClick={(e)=>{e.stopPropagation()}}>
                     {sidebar}
                 </div>
             </Backdrop>}
-            <div className="bg-yellow-600 w-full h-full">
+            <div className="w-full h-full shrink-0">
                 {body}
             </div>
         </div>
