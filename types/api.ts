@@ -1,4 +1,4 @@
-import { TypeUser } from "./enteties"
+import { TypeChat, TypeMessage, TypeUser } from "./enteties"
 
 export type TypeLogin = {
     username:string,
@@ -39,3 +39,9 @@ export type MultiResponse<Type> = {
     },
     data:Partial<Type>[]
 }
+
+export type ChatsRes = (TypeChat&{
+    messages:TypeMessage[],
+    user1:TypeUser,
+    user2:TypeUser
+})[]
