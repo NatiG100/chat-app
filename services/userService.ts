@@ -1,5 +1,5 @@
 import axiosClient from "@/client";
-import { TypeErrorRes, UpdateProfile } from "@/types/api";
+import { APIFeatures, MultiResponse, TypeErrorRes, UpdateProfile } from "@/types/api";
 import { TypeUser } from "@/types/enteties";
 
 export default class UserService{
@@ -16,5 +16,15 @@ export default class UserService{
             }
         })
         return axiosClient.patch<TypeErrorRes,TypeUser>('/users',form,{headers:{Authorization:true},withCredentials:true})
+    }
+    static async fetchUsers({select,...others}:APIFeatures<TypeUser>){
+        return axiosClient.get<TypeErrorRes,MultiResponse<TypeUser>>(
+            '/users',
+            {
+                params:{...others,select:Object.keys(select as object)},
+                headers:{Authorization:true},
+                withCredentials:true
+            }
+        )
     }
 }

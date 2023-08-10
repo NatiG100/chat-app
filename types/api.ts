@@ -26,3 +26,16 @@ export type TypeSuccessRes = {
 export type TypeErrorRes = {
     message:string,
 }
+
+export type APIFeatures<Type> = {
+    query?:string,
+    select?:Partial<Type>,
+    page?:number,
+    limit?:number,
+}
+export type MultiResponse<Type> = {
+    meta:{
+        totalCount:number
+    },
+    data:Partial<Type>[]
+}
