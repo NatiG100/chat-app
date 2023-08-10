@@ -9,7 +9,13 @@ export type UserListItemProps = Partial<TypeUser>&{
 }
 export default function UserListItem(user:UserListItemProps){
     return(
-        <div className={`cursor-pointer transition-all duration-300 w-full px-3 py-1 grid grid-cols-[max-content,minmax(20px,1fr),max-content] items-center gap-3 ${user.selected?"bg-[#3B82F6aa] hover:bg-[#3B82F677]":"hover:bg-black/10"}`}>
+        <div 
+            className={`
+                cursor-pointer transition-all duration-300 w-full px-3 py-1 
+                grid grid-cols-[max-content,minmax(20px,1fr),max-content] items-center gap-3 
+                ${user.selected?"bg-[#3B82F6aa] hover:bg-[#3B82F677]":"hover:bg-[#3B82F622]"
+            }`
+        }>
             <Image 
                 height="1000" 
                 width="1000" 
