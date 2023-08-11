@@ -6,10 +6,11 @@ import ListButton from "@/components/uiElements/buttons/ListButton";
 import Image from "next/image";
 
 import {FaUser} from 'react-icons/fa'
-import {BiSolidGroup} from 'react-icons/bi'
-import { useQuery } from "react-query";
+import {BiSolidGroup,BiPlus} from 'react-icons/bi'
+import {MdClose,MdCheck} from 'react-icons/md'
+import { useMutation, useQuery } from "react-query";
 import UserService from "@/services/userService";
-import { ChatsRes, MultiResponse } from "@/types/api";
+import { ChatsRes, CreateGroup, MultiResponse, TypeErrorRes } from "@/types/api";
 import { TypeGroup, TypeUser } from "@/types/enteties";
 import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
@@ -18,6 +19,11 @@ import useUser from "@/hooks/useUser";
 import { useSearchParams } from "next/navigation";
 import GroupService from "@/services/groupService";
 import useTab from "@/hooks/navigationHooks/useTab";
+import Button from "@/components/uiElements/buttons";
+import Modal from "@/components/uiElements/Modal";
+import Input from "@/components/uiElements/Textfield";
+import Textarea from "@/components/uiElements/Textarea";
+import { useForm } from "react-hook-form";
 
 
 export default function ChatSidebar(){
@@ -44,6 +50,13 @@ export default function ChatSidebar(){
     } = useQuery<ChatsRes>(['fetchUserChats',searchParams.get('tab')],async ()=>ChatsService.myChats(searchParams.get('tab')==="groups"?"group":"user"));
     const me = useUser();
     const tab = useTab();
+    const [showModal,setShowModal] = useState(false);
+    const onCloseCreateGroupModal = ()=>{
+        setShowModal(false);
+    }
+    const onOpenCreateGroupModal = ()=>{
+        setShowModal(true);
+    }
     return(
         <div className="h-full w-full max-w-full dark:bg-dark bg-light border-r-2 border-black/10 grid grid-cols-[80px,1fr]">
             <div className="bg-black/20">
@@ -100,7 +113,77 @@ export default function ChatSidebar(){
                         profileImg={me?.id===chat.user1.id?chat.user2.profileImg:chat.user1.profileImg}
                     />
                 ))}
+                {
+                    tab==="groups"&&(
+                        <div className="px-4">
+                            <Button attr={{onClick:onOpenCreateGroupModal}}>
+                                <BiPlus className="text-2xl"/>
+                                Create Group
+                            </Button>
+                        </div>
+                    )
+                }
+                {showModal&&<CreateGroupModal onClose={onCloseCreateGroupModal}/>}
             </div>
         </div>
+    )
+}
+
+const CreateGroupModal = ({onClose}:{onClose:()=>void})=>{
+    const {
+        data,
+        error,
+        isLoading,
+        mutate
+    } = useMutation<TypeGroup,TypeErrorRes,CreateGroup>('createGroup',GroupService.create)
+    const {register,handleSubmit,watch,formState:{errors},} = useForm<CreateGroup>({shouldFocusError:false});
+    const onRegister = (user:CreateGroup)=>{
+        mutate(user);
+    }
+    return(
+        <Modal onClose={onClose}>
+            <p className="text-primary text-lg md:text-xl mb-6">Create group</p>
+            <form onClick={handleSubmit(onRegister)}>
+                <Input 
+                    attr={{
+                        placeholder:"Group Name",
+                        id:"name",
+                        ...register("name",{required:"Group name is required"})
+                    }} 
+                    text="Group Name *"
+                    error={errors.name?.message}
+                />
+                <Input 
+                    attr={{
+                        placeholder:"Link",
+                        id:"link",
+                        ...register("link",{required:"Group link is required"})
+                    }} 
+                    text="Group Link *"
+                    error={errors.link?.message}
+                />
+                <Textarea
+                    attr={{
+                        placeholder:"A short description for the group",
+                        onResize:()=>{},
+                        ...register("description")
+                    }}
+                    text="Description"
+                />
+                <p className="mx-2 text-warning font-light animate-pulse">
+                    {error&&(Array.isArray(error.message)?error.message.join(',\n'):error.message)}
+                </p>
+                <div className="w-full flex gap-4 max-w-sm float-right">
+                    <Button className="border-warning text-warning" attr={{onClick:onClose}}>
+                        Cancel
+                        <MdClose className="text-xl"/>
+                    </Button>
+                    <Button attr={{type:"submit"}}>
+                        Create
+                        <MdCheck className="text-xl"/>
+                    </Button>
+                </div>
+            </form>
+        </Modal>
     )
 }
