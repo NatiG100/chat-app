@@ -24,6 +24,8 @@ import Modal from "@/components/uiElements/Modal";
 import Input from "@/components/uiElements/Textfield";
 import Textarea from "@/components/uiElements/Textarea";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
+import useCustomParams, { useManipQuery } from "@/hooks/navigationHooks/useCustomParams";
 
 
 export default function ChatSidebar(){
@@ -57,6 +59,8 @@ export default function ChatSidebar(){
     const onOpenCreateGroupModal = ()=>{
         setShowModal(true);
     }
+    const manipQuery = useManipQuery();
+    const {selectedChat,selectedGroup,selectedUser} = useCustomParams()
     return(
         <div className="h-full w-full max-w-full dark:bg-dark bg-light border-r-2 border-black/10 grid grid-cols-[80px,1fr]">
             <div className="bg-black/20">
@@ -65,13 +69,13 @@ export default function ChatSidebar(){
                 </div>
                 <ChatFolder 
                     active={searchParams.get('tab')!=="groups"}
-                    href="/?tab=users"
+                    href={"/?"+manipQuery('tab',"users")}
                     icon={<FaUser/>}
                     text="Users"
                 />
                 <ChatFolder 
                     active={searchParams.get('tab')==="groups"}
-                    href="/?tab=groups"
+                    href={"/?"+manipQuery('tab',"groups")}
                     icon={<BiSolidGroup/>}
                     text="Groups"
                 />
@@ -82,36 +86,39 @@ export default function ChatSidebar(){
                 </div>
                 {tab!=="groups"&&(data?.data?.length as number>0)&&<p className="text-sm px-4 my-2 text-light-text-lighter dark:text-dark-text-darker bg-white/10 py-1">Users</p>}
                 {tab!=="groups"&&data?.data.map((user)=>(
-                    <UserListItem
-                        firstName={user.firstName}
-                        lastName={user.lastName}
-                        selected={false}
-                        key={user.id}
-                        profileImg={user.profileImg}
-                    />
+                    <Link href={"/?"+manipQuery('user',user.id?.toString(),["group","chat"])} key={user.id}>
+                        <UserListItem
+                            firstName={user.firstName}
+                            lastName={user.lastName}
+                            selected={selectedUser===user.id}
+                            profileImg={user.profileImg}
+                        />
+                    </Link>
                 ))}
                 {tab==="groups"&&(groups?.data?.length as number>0)&&<p className="text-sm px-4 my-2 text-light-text-lighter dark:text-dark-text-darker bg-white/10 py-1">Groups</p>}
                 {tab==="groups"&&groups?.data.map((group)=>(
-                    <UserListItem
-                        firstName={group.name}
-                        lastMessage={group.link}
-                        selected={false}
-                        key={group.id}
-                        profileImg={group.profileImg}
-                    />
+                    <Link href={"/?"+manipQuery('group',group.id?.toString(),["chat","user"])} key={group.id}>
+                        <UserListItem
+                            firstName={group.name}
+                            lastMessage={group.link}
+                            selected={selectedGroup===group.id}
+                            profileImg={group.profileImg}
+                        />
+                    </Link>
                 ))}
                 {(myChats?.length as number>0)&&<p className="text-sm px-4 my-2 text-light-text-lighter dark:text-dark-text-darker bg-white/10 py-1">{tab==="group"?"Group":"User"} Chats</p>}
                 {myChats?.map((chat)=>(
-                    <UserListItem
-                        firstName={me?.id===chat.user1.id?chat.user2.firstName:chat.user1.firstName}
-                        lastName={me?.id===chat.user1.id?chat.user2.lastName:chat.user1.lastName}
-                        selected={false}
-                        key={chat.id}
-                        lastMessage={chat.messages[0]?.text||""}
-                        lastMessageByYou={chat.messages[0]?.senderId===me?.id}
-                        lastSent={chat.messages[0]?.updatedAt?new Date(chat.messages[0]?.updatedAt):new Date(chat.messages[0]?.timeStamp)}
-                        profileImg={me?.id===chat.user1.id?chat.user2.profileImg:chat.user1.profileImg}
-                    />
+                    <Link href={"/?"+manipQuery('chat',chat.id?.toString(),["group","user"])} key={chat.id}>
+                        <UserListItem
+                            firstName={me?.id===chat.user1.id?chat.user2.firstName:chat.user1.firstName}
+                            lastName={me?.id===chat.user1.id?chat.user2.lastName:chat.user1.lastName}
+                            selected={selectedChat===chat.id}
+                            lastMessage={chat.messages[0]?.text||""}
+                            lastMessageByYou={chat.messages[0]?.senderId===me?.id}
+                            lastSent={chat.messages[0]?.updatedAt?new Date(chat.messages[0]?.updatedAt):new Date(chat.messages[0]?.timeStamp)}
+                            profileImg={me?.id===chat.user1.id?chat.user2.profileImg:chat.user1.profileImg}
+                        />
+                    </Link>
                 ))}
                 {
                     tab==="groups"&&(
@@ -136,14 +143,14 @@ const CreateGroupModal = ({onClose}:{onClose:()=>void})=>{
         isLoading,
         mutate
     } = useMutation<TypeGroup,TypeErrorRes,CreateGroup>('createGroup',GroupService.create)
-    const {register,handleSubmit,watch,formState:{errors},} = useForm<CreateGroup>({shouldFocusError:false});
+    const {register,handleSubmit,watch,formState:{errors},} = useForm<CreateGroup>();
     const onRegister = (user:CreateGroup)=>{
         mutate(user);
     }
     return(
         <Modal onClose={onClose}>
             <p className="text-primary text-lg md:text-xl mb-6">Create group</p>
-            <form onClick={handleSubmit(onRegister)}>
+            <form onSubmit={handleSubmit(onRegister)}>
                 <Input 
                     attr={{
                         placeholder:"Group Name",
