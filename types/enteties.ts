@@ -21,8 +21,11 @@ export type TypeGroup = {
 export type TypeChat = {
     id:number,
     groupId?:number,
-    user1?:number,
-    user2?:number,
+    user1Id?:number,
+    user2Id?:number,
+    user1?:TypeUser,
+    user2?:TypeUser,
+    group?:TypeGroup
 }
 
 export type TypeMessage = {

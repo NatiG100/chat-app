@@ -10,9 +10,9 @@ export default function useCustomParams(){
     const searchParams = useSearchParams();
     useEffect(()=>{
         if(searchParams){
-            let user = parseInt(searchParams.get('user')||"-1")||-1;
-            let group = parseInt(searchParams.get('group')||"-1")||-1;
-            let chat = parseInt(searchParams.get('chat')||"-1")||-1;
+            let user = parseInt(searchParams.get('user')||"0")||0;
+            let group = parseInt(searchParams.get('group')||"0")||0;
+            let chat = parseInt(searchParams.get('chat')||"0")||0;
             setCustomSearchParams({selectedChat:chat,selectedGroup:group,selectedUser:user});
         }
     },[searchParams])

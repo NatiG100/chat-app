@@ -9,7 +9,7 @@ type TypeBackdropProps = {
 export default function Backdrop({onClose,children,className,}:TypeBackdropProps){
     return(
         <div 
-            className={`${className} fixed top-0 left-0 w-screen h-screen bg-black/60 backdrop-blur-sm`} 
+            className={`${className} fixed top-0 left-0 w-screen h-screen bg-black/60 backdrop-blur-sm z-50`} 
             onClick={onClose}
         >
             {children}
