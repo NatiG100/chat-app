@@ -1,4 +1,5 @@
 "use client"
+import Chat from "@/components/chat";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSender from "@/components/chat/ChatSender"
 import useCustomParams from "@/hooks/navigationHooks/useCustomParams";
@@ -8,7 +9,7 @@ export default function Home() {
   return (
       <div 
         className='
-          h-full w-full bg-light-surfce dark:bg-dark-surface
+          max-h-full h-40 w-full bg-light-surfce dark:bg-dark-surface
           grid grid-rows-[max-content,1fr,max-content]
         '
       >
@@ -17,8 +18,7 @@ export default function Home() {
           groupId={selectedGroup}
           userId={selectedUser}
         />
-        <div className="overflow-y-auto">
-        </div>
+        <Chat chatId={selectedChat}/>
         <ChatSender/>
       </div>
   )

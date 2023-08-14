@@ -40,4 +40,5 @@ export type TypeMessage = {
     audio?:string,
     type:"TEXT"|"VIDEO"|"AUDIO",
     seen:boolean,
+    user:Pick<TypeUser,"profileImg"|"firstName"|"lastName">
 }
