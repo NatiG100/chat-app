@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-export default function({src}:{src:string}){
+export default function({src,className}:{src:string,className?:string}){
     return (
         <Image 
-            height="1000" 
-            width="1000" 
+            height="50" 
+            width="50" 
             alt="profile" 
             src={src}
-            className='lg:h-14 lg:w-14 h-8 w-8 rounded-full object-cover border-2 border-black/10 shrink-0'
+            className={`${className?className:"h-14 w-14"} rounded-full object-cover border-2 border-black/10 shrink-0`}
         />
     )
 }
