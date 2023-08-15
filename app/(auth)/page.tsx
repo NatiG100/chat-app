@@ -9,7 +9,7 @@ export default function Home() {
   return (
       <div 
         className='
-          max-h-full h-40 w-full bg-light-surfce dark:bg-dark-surface
+          h-full w-full bg-light-surfce dark:bg-dark-surface
           grid grid-rows-[max-content,1fr,max-content]
         '
       >

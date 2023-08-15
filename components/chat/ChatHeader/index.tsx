@@ -42,7 +42,7 @@ export default function ChatHeader({userId,chatId,groupId}:ChatHeaderProps){
     },[userId,chatId,groupId])
     if(!(chatId||userId||groupId)) return (<div></div>);
     return(
-        <div className="w-full flex items-center justify-start py-1 px-6 gap-3 bg-black/5 dark:bg-white/5">
+        <div className="w-full flex items-center justify-start py-1 px-6 gap-3 bg-black/5 dark:bg-white/5 sticky ">
             {chat&&<Avatar
                 src={`${getProfileOfFriend(chat)?.profileImg?"https://ucarecdn.com/"+getProfileOfFriend(chat)?.profileImg+"/":"/noProfile.png"}`}
             />}

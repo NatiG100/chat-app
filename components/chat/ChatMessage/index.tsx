@@ -22,7 +22,7 @@ export default function ChatMessage({
                 text-[#0c0c0c]  p-5   my-2 max-w-xl font-light
                 dark:text-white shadow-md cursor-pointer rounded-md min-w-[350px]
                 ${senderId===user?.id?
-                    "dark:bg-[#1d232f] bg-[#b6c0d4] self-start": 
+                    "dark:bg-[#1d232f] bg-[#b6c0d4] self-end": 
                     "dark:bg-[#282f3e] bg-[#e4e4e4] self-end md:self-start md:ml-12"
                 }
             `}>
