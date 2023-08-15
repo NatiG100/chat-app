@@ -11,8 +11,8 @@ type ChatProps = {
 export default function Chat({chatId}:ChatProps){
     const {data:messages} = useQuery<TypeMessage[],TypeErrorRes>([chatId,"fetchChatMessages"],()=>MessageService.messages(chatId as number),{enabled:!!chatId})
     return (
-        <div className="h-full w-full flex flex-col overflow-y-auto ">
-            <div className="flex-1 "></div>
+        <div className="h-full w-full flex flex-col overflow-y-auto custom-scroll py-4">
+            <div className="flex-1"></div>
             {messages?.map((message)=>(<ChatMessage {...message} key={message.id}/>))}
         </div>       
     );

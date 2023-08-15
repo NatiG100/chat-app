@@ -19,7 +19,7 @@ export default function Home() {
           userId={selectedUser}
         />
         <Chat chatId={selectedChat}/>
-        <ChatSender/>
+        <ChatSender chatId={selectedChat}/>
       </div>
   )
 }
