@@ -19,7 +19,11 @@ export default function Home() {
           userId={selectedUser}
         />
         <Chat chatId={selectedChat}/>
-        <ChatSender chatId={selectedChat}/>
+        <ChatSender 
+          chatId={selectedChat}
+          anotherUserId={selectedUser}
+          groupId={selectedGroup}
+        />
       </div>
   )
 }

@@ -12,6 +12,7 @@ export default function ChatMessage({
     user:sender
 }:TypeMessage){
     const user = useUser();
+    
     return (
         <div className={`
             h-max px-7 m-1 w-max max-w-7 

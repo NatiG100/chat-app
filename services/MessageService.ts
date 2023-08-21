@@ -8,8 +8,6 @@ export default class MessageService{
             '/message',
             {
                 params:{chatId},
-                headers:{Authorization:true},
-                withCredentials:true
             }
         )
     }
@@ -19,8 +17,24 @@ export default class MessageService{
             message,
             {
                 params:{chatId},
-                headers:{Authorization:true},
-                withCredentials:true
+            }
+        )
+    }
+    static async sendToUser({userId,...message}:SendMessage){
+        return axiosClient.post<TypeErrorRes,TypeMessage>(
+            `/message/touser/${userId}`,
+            message,
+            {
+                params:{userId},
+            }
+        )
+    }
+    static async sendToGroup({groupId,...message}:SendMessage){
+        return axiosClient.post<TypeErrorRes,TypeMessage>(
+            `/message/togroup/${groupId}`,
+            message,
+            {
+                params:{groupId},
             }
         )
     }

@@ -17,7 +17,19 @@ export const metadata: Metadata = {
     title: 'Chat app',
     description: 'A chat application',
 }
-const queryClient = new QueryClient({defaultOptions:{mutations:{retry:0},queries:{retry:3}}});
+const queryClient = new QueryClient({
+    defaultOptions:{
+        mutations:{
+            retry:0,
+        },
+        queries:{
+            retry:2,
+            cacheTime:10,
+            refetchOnMount:false,
+            refetchOnWindowFocus:false,
+        }
+    },  
+});
 export default function LayoutWithProvider({children}:{children:ReactNode}){
     return(
         <QueryClientProvider client={queryClient}>

@@ -41,7 +41,7 @@ export type MultiResponse<Type> = {
 }
 
 export type CreateGroup = Pick<TypeGroup,"name"|"link"|"description">
-export type SendMessage = Pick<TypeMessage,"text"|"image"|"audio"|"type"|"video"> & {chatId:number}
+export type SendMessage = Pick<TypeMessage,"text"|"image"|"audio"|"type"|"video"> & {chatId?:number,userId?:number,groupId?:number}
 
 export type ChatsRes = (TypeChat&{
     messages:TypeMessage[],
