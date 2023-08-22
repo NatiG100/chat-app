@@ -7,8 +7,8 @@ import GroupService from "@/services/groupService"
 import UserService from "@/services/userService"
 import { TypeErrorRes } from "@/types/api"
 import { TypeChat, TypeGroup, TypeUser } from "@/types/enteties"
-import Image from "next/image"
-import { useEffect } from "react"
+import Link from "next/link"
+import {AiOutlineMenu} from 'react-icons/ai'
 import { useQuery } from "react-query"
 
 type ChatHeaderProps = {
@@ -18,9 +18,20 @@ type ChatHeaderProps = {
 }
 export default function ChatHeader({userId,chatId,groupId}:ChatHeaderProps){
     const user = useUser();
-    const {data:chat} = useQuery<TypeChat,TypeErrorRes>([chatId,"userChat"],()=>ChatsService.getChat(chatId as number),{enabled:!!chatId})
-    const {data:selectedUser} = useQuery<TypeUser,TypeErrorRes>([userId,"fetchuser"],()=>UserService.fetchSingleUser(userId as number),{enabled:!!userId})
-    const {data:group} = useQuery<TypeGroup,TypeErrorRes>([groupId,"fetchgroup"],()=>GroupService.fetchSingleGroup(groupId as number),{enabled:!!groupId})
+    const {data:chat} = useQuery<TypeChat,TypeErrorRes>(
+        [chatId,"userChat"],()=>ChatsService.getChat(chatId as number),
+        {enabled:!!chatId}
+    )
+    const {data:selectedUser} = useQuery<TypeUser,TypeErrorRes>(
+        [userId,"fetchuser"],
+        ()=>UserService.fetchSingleUser(userId as number),
+        {enabled:!!userId}
+    )
+    const {data:group} = useQuery<TypeGroup,TypeErrorRes>(
+        [groupId,"fetchgroup"],
+        ()=>GroupService.fetchSingleGroup(groupId as number),
+        {enabled:!!groupId}
+    )
     function getChatProfile(chat?:TypeChat){
         if(!chat) return undefined;
         if(chat.groupId){
@@ -66,6 +77,12 @@ export default function ChatHeader({userId,chatId,groupId}:ChatHeaderProps){
                     }
                 </p>
             </div>
+            <div className="flex-1"></div>
+            {(group||chat?.groupId)&&
+                <Link href={`/groups/${group?group?.id:chat?.groupId}`} className="opacity-70 hover:opacity-100 transition-opacity duration-300">
+                    <AiOutlineMenu/>
+                </Link>
+            }
         </div>
     )
 }
