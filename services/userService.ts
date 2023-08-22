@@ -27,4 +27,9 @@ export default class UserService{
             }
         )
     }
+    static async fetchSingleUser(id:number){
+        return axiosClient.get<TypeErrorRes,TypeUser>(
+            `/users/${id}`
+        )
+    }
 }

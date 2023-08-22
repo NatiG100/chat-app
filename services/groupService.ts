@@ -23,4 +23,9 @@ export default class GroupService{
             }
         )
     }
+    static async fetchSingleGroup(id:number){
+        return axiosClient.get<TypeErrorRes,TypeGroup>(
+            `/groups/${id}`
+        )
+    }
 }
