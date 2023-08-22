@@ -12,6 +12,9 @@ export type TypeChangePassword = {
 export type UpdateProfile = Omit<Partial<TypeUser>,"profileImg">&{
     profileImg:File|null
 }
+export type UpdateGroup = Omit<Partial<TypeGroup>,"profileImg"|"link">&{
+    profileImg:File|null
+}
 export enum permissions{
     ADD_MEMBER=1,
     CHANGE_MEMBER_STATUS=2,
