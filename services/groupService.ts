@@ -1,5 +1,5 @@
 import axiosClient from "@/client";
-import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, UpdateGroup, UpdateProfile } from "@/types/api";
+import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, TypeFetchMembersRes, UpdateGroup, UpdateProfile } from "@/types/api";
 import { TypeGroup, TypeUser } from "@/types/enteties";
 
 export default class GroupService{
@@ -38,5 +38,12 @@ export default class GroupService{
             }
         })
         return axiosClient.patch<TypeErrorRes,TypeGroup>(`/groups/${id}`,form,{headers:{Authorization:true},withCredentials:true})
+    }
+
+    //Group members service
+    static async fetchGroupMembers(groupId:number){
+        return axiosClient.get<TypeErrorRes,TypeFetchMembersRes>(
+            `/groups/${groupId}/members`
+        )
     }
 }

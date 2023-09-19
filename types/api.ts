@@ -51,3 +51,13 @@ export type ChatsRes = (TypeChat&{
     user1:TypeUser,
     user2:TypeUser
 })[]
+
+export type TypeMember = {
+    user:TypeUser,
+    blocked:boolean,
+}
+export type TypeFetchMembersRes = {
+    id:number,
+    members:TypeMember[],
+    superAdmin:TypeUser,
+}

@@ -7,7 +7,7 @@ export type TypeButtonProps = {
 export default function Button ({attr,children,my="my-4",className}:TypeButtonProps){
     return(
         <button className={`
-            dark:hover:bg-white/10 hover:bg-black/10 p-[6px] 
+            ${!attr?.disabled?"hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer":"cursor-not-allowed "} p-[6px] 
             transition-all hover:shadow-sm
             border-2 rounded-md  w-full py-[6px] text-base md:text-lg ${my}
             disabled:opacity-60 flex items-center justify-center gap-3
