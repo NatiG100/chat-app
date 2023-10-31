@@ -59,5 +59,11 @@ export type TypeMember = {
 export type TypeFetchMembersRes = {
     id:number,
     members:TypeMember[],
+    admins:[{
+        userId:number,
+        permissions:[
+            {permission:permissions}
+        ]
+    }]
     superAdmin:TypeUser,
 }

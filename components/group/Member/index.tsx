@@ -4,7 +4,9 @@ import { GET_IMG_URL } from "@/constants";
 import { TypeMember } from "@/types/api";
 import { TypeUser } from "@/types/enteties";
 
-export default function Member({user,blocked,isSuperAdmin}:TypeMember&{isSuperAdmin:boolean}){
+export default function Member({
+    user,blocked,isSuperAdmin,showActions
+}:TypeMember&{isSuperAdmin:boolean,showActions:boolean}){
     
     return(
         <div className="w-full gap-8 grid grid-cols-[2fr,5fr,3fr]">
@@ -23,12 +25,15 @@ export default function Member({user,blocked,isSuperAdmin}:TypeMember&{isSuperAd
                     {user.username}
                 </p>
             </div>
-            <Button 
-                className={`w-32 ${blocked?"text-yellow-500 border-yellow-500":"text-warning border-warning"}`}
-                attr={{disabled:isSuperAdmin}}
-            >
-                {blocked?"Unblock":"Block"}
-            </Button>
+            {
+                showActions&&
+                <Button 
+                    className={`w-32 ${blocked?"text-yellow-500 border-yellow-500":"text-warning border-warning"}`}
+                    attr={{disabled:isSuperAdmin}}
+                >
+                    {blocked?"Unblock":"Block"}
+                </Button>
+            }
         </div>
     );
 }
