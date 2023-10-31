@@ -46,4 +46,11 @@ export default class GroupService{
             `/groups/${groupId}/members`
         )
     }
+
+    // //admin
+    // static async fetchGroupAdmins(groupId:number){
+    //     return axiosClient.get<TypeErrorRes,TypeFetchMembersRes>(
+    //         `/groups/${groupId}/admins`
+    //     )
+    // }
 }

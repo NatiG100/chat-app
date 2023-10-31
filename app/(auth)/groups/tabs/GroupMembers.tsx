@@ -1,13 +1,14 @@
 import Member from "@/components/group/Member"
 import Button from "@/components/uiElements/buttons"
 import GroupService from "@/services/groupService"
-import { TypeErrorRes, TypeFetchMembersRes, permissions } from "@/types/api"
+import { TypeErrorRes, TypeFetchMembersRes, TypeFetchUsersRes, permissions } from "@/types/api"
 import { group } from "console"
 import { useQuery } from "react-query"
 import {BiPlus} from 'react-icons/bi'
 import Modal from "@/components/uiElements/Modal"
 import { useCallback, useMemo, useState } from "react"
 import useUser from "@/hooks/useUser"
+import UserService from "@/services/userService"
 
 export default function GroupMembers({groupId}:{groupId:number}){
     //state logic to control add member modal visibility
@@ -52,7 +53,13 @@ export default function GroupMembers({groupId}:{groupId:number}){
     if(isError) return <p className="text-red-600">Error!</p>
     return (
         <div className="w-full max-w-max">
-            {showAddMember&&<AddMemberModal onClose={hideAddMemberModal}/>}
+            {
+                showAddMember&&
+                <AddMemberModal 
+                    onClose={hideAddMemberModal} 
+                    groupId={groupId}
+                    excludeIds={[members?.superAdmin.id,...members?members.admins.map((member)=>(member.userId)):[]]}
+                />}
             <div className="max-w-2xl m-6 lg:m-16 my-3 lg:my-8 max-h-full overflow-y-auto">
                 <p className="text-primary text-lg md:text-xl mb-6">Group Members</p>
                 {members?.members.map((member)=>(
@@ -77,21 +84,55 @@ export default function GroupMembers({groupId}:{groupId:number}){
     )
 }
 
-const AddMemberModal = ({onClose}:{onClose:()=>void})=>{
-    // const {
-    //     data,
-    //     error,
-    //     isLoading,
-    //     mutate
-    // } = useMutation<TypeGroup,TypeErrorRes,CreateGroup>('createGroup',GroupService.create)
-    // const {register,handleSubmit,watch,formState:{errors},} = useForm<CreateGroup>();
-    // const onRegister = (user:CreateGroup)=>{
-    //     mutate(user);
-    // }
+const AddMemberModal = ({
+    onClose,
+    groupId,
+    excludeIds
+}:{
+    onClose:()=>void,
+    groupId:number,
+    excludeIds:(number|undefined)[]
+})=>{
+    const {
+        data:users,
+        error,
+        isLoading,
+        refetch
+    } = useQuery<TypeFetchUsersRes,TypeErrorRes>(
+        'fetchUsers',
+        ()=>UserService.fetchUsers({
+            page:0,
+            limit:8,
+            query:"",
+            select:{
+                firstName:"true",
+                lastName:"true",
+                profileImg:"true",
+                phoneNumber:"true",
+                username:"true"
+            }
+        },)
+    )
+    let usersNotInGroup = users?.data.filter((user)=>(
+        !excludeIds.includes(user.id)
+    ));
     return(
         <Modal onClose={onClose}>
             <p className="text-primary text-lg md:text-xl mb-6">Select Member</p>
-            
+            <div>
+                {
+                    usersNotInGroup?.map((user)=>(
+                        <Button key={user.id} attr={{}} className="border-0 text-start">
+                            <Member 
+                                user={user} 
+                                blocked={false} 
+                                isSuperAdmin={false} 
+                                showActions={false}
+                            />
+                        </Button>
+                    ))
+                }
+            </div>
         </Modal>
     )
 }

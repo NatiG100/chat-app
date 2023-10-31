@@ -53,7 +53,7 @@ export type ChatsRes = (TypeChat&{
 })[]
 
 export type TypeMember = {
-    user:TypeUser,
+    user:Partial<TypeUser>,
     blocked:boolean,
 }
 export type TypeFetchMembersRes = {
@@ -67,3 +67,5 @@ export type TypeFetchMembersRes = {
     }]
     superAdmin:TypeUser,
 }
+
+export type TypeFetchUsersRes = MultiResponse<TypeUser>;
