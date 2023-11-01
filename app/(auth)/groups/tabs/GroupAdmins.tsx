@@ -123,10 +123,10 @@ const AddAdminModal = ({
         (['addAdminToGroup',groupId],GroupService.addGroupAdmin);
 
     const queryClient = useQueryClient();
-    function handleAddMember(userId:number){
+    function handleAddAdmin(userId:number){
         addAdmin({userId,groupId});
-        queryClient.invalidateQueries({queryKey:["fetchAdmins",groupId]});
         queryClient.invalidateQueries({queryKey:['fetchMembers',groupId]});
+        queryClient.invalidateQueries({queryKey:["fetchAdmins",groupId]});
         refetchMembers();
         refetchAdmins();
     }
@@ -154,7 +154,7 @@ const AddAdminModal = ({
                         <Button 
                             key={admin.user.id} 
                             attr={{
-                                onClick:()=>{admin.user.id?handleAddMember(admin.user.id):()=>{}},
+                                onClick:()=>{admin.user.id?handleAddAdmin(admin.user.id):()=>{}},
                                 disabled:isAdding
                             }}
                             className="border-none text-start"
