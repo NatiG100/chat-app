@@ -1,5 +1,5 @@
 import axiosClient from "@/client";
-import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, TypeFetchMembersRes, TypeSuccessRes, UpdateGroup, UpdateProfile } from "@/types/api";
+import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, TypeFetchAdminsRes, TypeFetchMembersRes, TypeSuccessRes, UpdateGroup, UpdateProfile } from "@/types/api";
 import { TypeGroup, TypeUser } from "@/types/enteties";
 
 export default class GroupService{
@@ -47,16 +47,30 @@ export default class GroupService{
         )
     }
 
-    // //admin
-    // static async fetchGroupAdmins(groupId:number){
-    //     return axiosClient.get<TypeErrorRes,TypeFetchMembersRes>(
-    //         `/groups/${groupId}/admins`
-    //     )
-    // }
 
+    
     static async addGroupMember({groupId,userId}:{groupId:number,userId:number}){
         return axiosClient.post<TypeErrorRes,TypeSuccessRes>(
             `/groups/${groupId}/members`,
+            {
+                userId
+            },
+            {
+                headers:{Authorization:true},
+                withCredentials:true
+            }
+        ) 
+    }
+
+    //admin
+    static async fetchGroupAdmins(groupId:number){
+        return axiosClient.get<TypeErrorRes,TypeFetchAdminsRes>(
+            `/groups/${groupId}/admins`
+        )
+    }
+    static async addGroupAdmin({groupId,userId}:{groupId:number,userId:number}){
+        return axiosClient.post<TypeErrorRes,TypeSuccessRes>(
+            `/groups/${groupId}/admins`,
             {
                 userId
             },

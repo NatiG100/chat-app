@@ -56,6 +56,10 @@ export type TypeMember = {
     user:Partial<TypeUser>,
     blocked:boolean,
 }
+export type TypeAdmin = {
+    user:Partial<TypeUser>,
+    permissions:permissions[],
+}
 export type TypeFetchMembersRes = {
     id:number,
     members:TypeMember[],
@@ -66,6 +70,13 @@ export type TypeFetchMembersRes = {
         ]
     }]
     superAdmin:TypeUser,
+}
+export type TypeFetchAdminsRes = {
+    admins: {
+        user:Partial<TypeUser>,
+        permissions:permissions[],
+    }[],
+    superAdmin:Partial<TypeUser>
 }
 
 export type TypeFetchUsersRes = MultiResponse<TypeUser>;

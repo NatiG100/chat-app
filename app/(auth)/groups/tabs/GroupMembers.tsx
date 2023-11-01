@@ -2,11 +2,10 @@ import Member from "@/components/group/Member"
 import Button from "@/components/uiElements/buttons"
 import GroupService from "@/services/groupService"
 import { TypeErrorRes, TypeFetchMembersRes, TypeFetchUsersRes, TypeSuccessRes, permissions } from "@/types/api"
-import { group } from "console"
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import {BiPlus} from 'react-icons/bi'
 import Modal from "@/components/uiElements/Modal"
-import { useCallback, useMemo, useState } from "react"
+import { useState } from "react"
 import useUser from "@/hooks/useUser"
 import UserService from "@/services/userService"
 
