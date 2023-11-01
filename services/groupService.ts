@@ -1,5 +1,5 @@
 import axiosClient from "@/client";
-import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, TypeFetchMembersRes, UpdateGroup, UpdateProfile } from "@/types/api";
+import { APIFeatures, CreateGroup, MultiResponse, TypeErrorRes, TypeFetchMembersRes, TypeSuccessRes, UpdateGroup, UpdateProfile } from "@/types/api";
 import { TypeGroup, TypeUser } from "@/types/enteties";
 
 export default class GroupService{
@@ -53,4 +53,17 @@ export default class GroupService{
     //         `/groups/${groupId}/admins`
     //     )
     // }
+
+    static async addGroupMember({groupId,userId}:{groupId:number,userId:number}){
+        return axiosClient.post<TypeErrorRes,TypeSuccessRes>(
+            `/groups/${groupId}/members`,
+            {
+                userId
+            },
+            {
+                headers:{Authorization:true},
+                withCredentials:true
+            }
+        ) 
+    }
 }
