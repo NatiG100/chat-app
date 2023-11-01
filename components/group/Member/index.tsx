@@ -1,12 +1,11 @@
 import Avatar from "@/components/uiElements/Avatar";
-import Button from "@/components/uiElements/buttons";
 import { GET_IMG_URL } from "@/constants";
 import { TypeMember } from "@/types/api";
-import { TypeUser } from "@/types/enteties";
+import { ReactNode } from "react";
 
 export default function Member({
-    user,blocked,isSuperAdmin,showActions
-}:TypeMember&{isSuperAdmin:boolean,showActions:boolean}){
+    user,blocked,isSuperAdmin,action=<></>,
+}:TypeMember&{isSuperAdmin:boolean,action?:ReactNode,groupId?:number}){
     
     return(
         <div className="w-full gap-8 grid grid-cols-[2fr,5fr,3fr]">
@@ -26,13 +25,7 @@ export default function Member({
                 </p>
             </div>
             {
-                showActions&&
-                <Button 
-                    className={`w-32 ${blocked?"text-yellow-500 border-yellow-500":"text-warning border-warning"}`}
-                    attr={{disabled:isSuperAdmin}}
-                >
-                    {blocked?"Unblock":"Block"}
-                </Button>
+                action
             }
         </div>
     );

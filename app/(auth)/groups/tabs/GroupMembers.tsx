@@ -48,6 +48,23 @@ export default function GroupMembers({groupId}:{groupId:number}){
         }
         return false;
     };
+
+    //api call to block and unblock user
+    const {
+        isLoading:isBlockLoading,
+        isError:isBlockError,
+        mutate:changeUserStatus
+    } = useMutation<TypeSuccessRes,TypeErrorRes,{userId:number,block:boolean}>(
+        ['changeMemberStatus',groupId],
+        ({userId,block}:{userId:number,block:boolean})=>GroupService.changeMemberStatus({block,groupId,userId})
+    );
+    const queryClient = useQueryClient();
+    function handleChangeStatus(userId:number,block:boolean){
+        changeUserStatus({block,userId});
+        queryClient.invalidateQueries({queryKey:["fetchMembers",groupId]}).then(()=>{
+            refetchMembers();
+        });
+    }
     
     if(isLoading) return <p>Loading ...</p>
     if(isError) return <p className="text-red-600">Error!</p>
@@ -72,7 +89,18 @@ export default function GroupMembers({groupId}:{groupId:number}){
                         key={member.user.id}
                         isSuperAdmin={members.superAdmin.id===member.user.id}
                         {...member}
-                        showActions={canUserDo(permissions.CHANGE_MEMBER_STATUS)}
+                        action={
+                            canUserDo(permissions.CHANGE_MEMBER_STATUS)&&
+                            <Button 
+                                className={`w-32 ${member.blocked?"text-yellow-500 border-yellow-500":"text-warning border-warning"}`}
+                                attr={{
+                                    disabled:members.superAdmin.id===member.user.id||isBlockLoading,
+                                    onClick:()=>handleChangeStatus(member.user.id as number,!member.blocked)
+                                }}
+                            >
+                                {member.blocked?"Unblock":"Block"}
+                            </Button>
+                        }
                     />
                 ))}
                 {
@@ -172,7 +200,6 @@ const AddMemberModal = ({
                                 user={user} 
                                 blocked={false} 
                                 isSuperAdmin={false} 
-                                showActions={false}
                             />
                         </Button>
                     ))

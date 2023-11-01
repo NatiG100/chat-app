@@ -61,6 +61,17 @@ export default class GroupService{
             }
         ) 
     }
+    static async changeMemberStatus({groupId,userId,block}:{groupId:number,userId:number,block:boolean}){
+        return axiosClient.patch<TypeErrorRes,TypeSuccessRes>(
+            `/groups/${groupId}/members/${userId}`,
+            {},
+            {
+                params:{
+                    blocked:block,
+                }
+            }
+        )
+    }
 
     //admin
     static async fetchGroupAdmins(groupId:number){

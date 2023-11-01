@@ -163,7 +163,6 @@ const AddAdminModal = ({
                                 user={admin.user} 
                                 blocked={false} 
                                 isSuperAdmin={false} 
-                                showActions={false}
                             />
                         </Button>
                     ))
