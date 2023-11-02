@@ -58,7 +58,7 @@ export type TypeMember = {
 }
 export type TypeAdmin = {
     user:Partial<TypeUser>,
-    permissions:permissions[],
+    permissions:TypePermission[],
 }
 export type TypeFetchMembersRes = {
     id:number,
@@ -71,10 +71,14 @@ export type TypeFetchMembersRes = {
     }]
     superAdmin:TypeUser,
 }
+export type TypePermission = {
+    id:number,
+    value:permissions
+}
 export type TypeFetchAdminsRes = {
     admins: {
         user:Partial<TypeUser>,
-        permissions:permissions[],
+        permissions:TypePermission[],
     }[],
     superAdmin:Partial<TypeUser>
 }

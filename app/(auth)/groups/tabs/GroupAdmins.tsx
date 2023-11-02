@@ -44,7 +44,7 @@ export default function GroupAdmins({groupId}:{groupId:number}){
             let foundAdmin = admins.admins.filter((admin)=>(admin.user.id===user.id));
             if(foundAdmin.length===0)return false;
             return foundAdmin[0].permissions.filter(
-                (permission)=>(permission===requiredPermission)
+                (permission)=>(permission.value===requiredPermission)
             ).length!==0;
         }
         return false;
@@ -73,6 +73,7 @@ export default function GroupAdmins({groupId}:{groupId:number}){
                         user={admin.user}
                         permissions={admin.permissions}
                         showActions={false}
+                        groupId={groupId}
                     />
                 ))}
                 {
@@ -162,7 +163,7 @@ const AddAdminModal = ({
                             <Member 
                                 user={admin.user} 
                                 blocked={false} 
-                                isSuperAdmin={false} 
+                                isSuperAdmin={false}
                             />
                         </Button>
                     ))

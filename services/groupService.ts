@@ -91,4 +91,18 @@ export default class GroupService{
             }
         ) 
     }
+    //permission
+    static async grantPermission({groupId,adminId,permissionId}:PermissionParams){
+        return axiosClient.post<TypeErrorRes,TypeSuccessRes>(
+            `/groups/${groupId}/admins/${adminId}/permissions/${permissionId}`
+        );
+    }
+    static async revokePermission({groupId,adminId,permissionId}:PermissionParams){
+        return axiosClient.delete<TypeErrorRes,TypeSuccessRes>(
+            `/groups/${groupId}/admins/${adminId}/permissions/${permissionId}`
+        );
+    }
+}
+export type PermissionParams = {
+    groupId:number,adminId:number,permissionId:number
 }

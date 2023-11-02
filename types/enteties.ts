@@ -42,3 +42,8 @@ export type TypeMessage = {
     seen:boolean,
     user:Pick<TypeUser,"profileImg"|"firstName"|"lastName">
 }
+
+export type Permission = {
+    id:number,
+    value:string,
+}
