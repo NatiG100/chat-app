@@ -1,6 +1,6 @@
 import Member from "@/components/group/Member"
 import Button from "@/components/uiElements/buttons"
-import GroupService from "@/services/groupService"
+import GroupService, { PermissionParams } from "@/services/groupService"
 import { TypeErrorRes, TypeFetchAdminsRes, TypeFetchMembersRes, TypeFetchUsersRes, TypeSuccessRes, permissions } from "@/types/api"
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import {BiPlus} from 'react-icons/bi'
@@ -49,6 +49,17 @@ export default function GroupAdmins({groupId}:{groupId:number}){
         }
         return false;
     };
+
+    //mutations to handle permission change
+    const revokeMutation = useMutation<TypeSuccessRes,TypeErrorRes,PermissionParams>(['changePermission'],GroupService.revokePermission);
+    const grantMutation = useMutation<TypeSuccessRes,TypeErrorRes,PermissionParams>(['changePermission'],GroupService.grantPermission);
+    //reflect updates
+    const queryClient = useQueryClient();
+    function reflectChanges() {
+        queryClient.invalidateQueries({queryKey:["fetchAdmins",groupId]}).then(()=>{
+            refetchAdmins();
+        });
+    }
     
     if(isLoading) return <p>Loading ...</p>
     if(isError) return <p className="text-red-600">Error!</p>
@@ -74,6 +85,9 @@ export default function GroupAdmins({groupId}:{groupId:number}){
                         permissions={admin.permissions}
                         showActions={false}
                         groupId={groupId}
+                        revokeMutation={revokeMutation}
+                        grantMutation={grantMutation}
+                        refetch={reflectChanges}
                     />
                 ))}
                 {

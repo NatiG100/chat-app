@@ -3,16 +3,20 @@ import Modal from "@/components/uiElements/Modal";
 import Button from "@/components/uiElements/buttons";
 import ToggleBtn from "@/components/uiElements/buttons/ToggleButton";
 import { GET_IMG_URL, TypePermissionDetail, permissiosDetail } from "@/constants";
-import GroupService, { PermissionParams } from "@/services/groupService";
-import { TypeAdmin, TypeErrorRes, TypeMember, TypeSuccessRes, permissions } from "@/types/api";
-import { TypeUser } from "@/types/enteties";
+import { PermissionParams } from "@/services/groupService";
+import { TypeAdmin, TypeErrorRes, TypeMember, TypeSuccessRes } from "@/types/api";
 import { getPermissionDetail } from "@/utils";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { UseMutationResult, } from "react-query";
 
 export default function Admin({
-    user,permissions,showActions,groupId
-}:TypeAdmin&{showActions:boolean,groupId:number}){
+    user,permissions,showActions,groupId,revokeMutation,grantMutation,refetch
+}:TypeAdmin&{
+    showActions:boolean,groupId:number,
+    revokeMutation:UseMutationResult<TypeSuccessRes,TypeErrorRes,PermissionParams>,
+    grantMutation:UseMutationResult<TypeSuccessRes,TypeErrorRes,PermissionParams>,
+    refetch:()=>void
+}){
     const [showPermissionsModal,setShowPermissionsModal] = useState(false);
     function openPermissionsModal(){
         setShowPermissionsModal(true);
@@ -24,17 +28,18 @@ export default function Admin({
         mutate:revokePermision,
         isLoading:isRevokeLoading,
         isError:isRevokeError,
-    } = useMutation<TypeSuccessRes,TypeErrorRes,PermissionParams>(['changePermission'],GroupService.revokePermission);
+    } = revokeMutation;
     const {
         mutate:grantPermission,
         isLoading:isGrantLoading,
         isError:isGrantError,
-    } = useMutation<TypeSuccessRes,TypeErrorRes,PermissionParams>(['changePermission'],GroupService.grantPermission);
+    } = grantMutation;
     function handleOnTogglePermission (permissionId:number){
         if(user.id){
             const userHasPermission = permissions.filter((per)=>(per.id===permissionId))[0];
             userHasPermission?revokePermision({adminId:user.id,groupId:groupId,permissionId:getPermissionDetail(permissionId).id}):
-                grantPermission({adminId:user.id,groupId:groupId,permissionId:getPermissionDetail(permissionId).id})
+                grantPermission({adminId:user.id,groupId:groupId,permissionId:getPermissionDetail(permissionId).id});
+            refetch();
         }
     }
     return(
