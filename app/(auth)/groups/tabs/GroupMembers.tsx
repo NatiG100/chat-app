@@ -162,10 +162,12 @@ const AddMemberModal = ({
     const queryClient = useQueryClient();
     function handleAddMember(userId:number){
         addMember({userId,groupId});
-        queryClient.invalidateQueries({queryKey:['fetchUsers',groupId]});
-        queryClient.invalidateQueries({queryKey:["fetchMembers",groupId]});
-        refetchMembers();
-        refetchUsers();
+        queryClient.invalidateQueries({queryKey:['fetchUsers',groupId]}).then(()=>{
+            refetchUsers();
+        });
+        queryClient.invalidateQueries({queryKey:["fetchMembers",groupId]}).then(()=>{
+            refetchMembers();
+        });
     }
     let usersNotInGroup = users?.data.filter((user)=>(
         !excludeIds.includes(user.id)

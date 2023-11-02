@@ -140,10 +140,12 @@ const AddAdminModal = ({
     const queryClient = useQueryClient();
     function handleAddAdmin(userId:number){
         addAdmin({userId,groupId});
-        queryClient.invalidateQueries({queryKey:['fetchMembers',groupId]});
-        queryClient.invalidateQueries({queryKey:["fetchAdmins",groupId]});
-        refetchMembers();
-        refetchAdmins();
+        queryClient.invalidateQueries({queryKey:['fetchMembers',groupId]}).then(()=>{
+            refetchMembers();
+        });
+        queryClient.invalidateQueries({queryKey:["fetchAdmins",groupId]}).then(()=>{
+            refetchAdmins();
+        });
     }
     let usersNotInGroup = members?.members.filter((user)=>(
         !excludeIds.includes(user.user.id)
