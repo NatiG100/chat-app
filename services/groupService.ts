@@ -102,6 +102,15 @@ export default class GroupService{
             `/groups/${groupId}/admins/${adminId}/permissions/${permissionId}`
         );
     }
+
+    //transfer ownership
+    static async transferOwnership({userId,groupId}:{userId:number,groupId:number}){
+        return axiosClient.patch<TypeErrorRes,TypeSuccessRes>(
+            `groups/${groupId}/transfer`,
+            {},
+            {params:{to:userId}}
+        )
+    }
 }
 export type PermissionParams = {
     groupId:number,adminId:number,permissionId:number
