@@ -34,7 +34,7 @@ export default function(props:ConfirmationBoxProps){
                         attr={{
                             onClick:()=>{props.callBack(false)}
                         }}
-                    >Yes</Button>
+                    >No</Button>
                 </>
             }
         />

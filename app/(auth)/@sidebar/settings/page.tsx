@@ -10,6 +10,10 @@ import AuthService from "@/services/authService";
 import { TypeErrorRes, TypeSuccessRes } from "@/types/api";
 import { logout } from "@/store/authStore";
 import { useRouter, useSearchParams } from "next/navigation";
+import ConfirmationBox from "@/components/uiElements/DialogBox/ConfirmationBox";
+import {useState} from 'react';
+import Modal from "@/components/uiElements/Modal";
+import Backdrop from "@/components/surfaces/Backdrop";
 
 export default function ChatSidebar(){
     const dispatch = useDispatch();
@@ -21,6 +25,15 @@ export default function ChatSidebar(){
     },[data]);
     const searchParams = useSearchParams()
     const router = useRouter()
+
+    //logout confirmation logic
+    const [openLogoutConfirmation,setOpenLogoutConfirmation] = useState(false);
+    function confirmationCallback(yes:boolean){
+        if(!yes){setOpenLogoutConfirmation(false)}
+        else{
+            reqLogout();
+        }
+    }
     return(
         <div className="h-full w-full dark:bg-dark bg-light border-r-2 border-black/10">
             <div className="h-[65px] w-full flex items-center justify-start px-6 mb-6">
@@ -34,10 +47,21 @@ export default function ChatSidebar(){
                 <FaLock/>
                 <p>Change Password</p>
             </ListButton>
-            <ListButton selected={false} attr={{onClick:()=>reqLogout()}}>
+            <ListButton selected={false} attr={{onClick:()=>setOpenLogoutConfirmation(true)}}>
                 <MdOutlineLogout className="text-warning text-xl"/>
                 <p className="text-warning">Logout</p>
             </ListButton>
+            {
+                openLogoutConfirmation&&
+                <Modal onClose={()=>setOpenLogoutConfirmation(false)} >
+                    <ConfirmationBox
+                        title="Log Out"
+                        prompt="Are you sure? You want to logout?"
+                        color="error"
+                        callBack={confirmationCallback}
+                    />
+                </Modal>
+            }
         </div>
     )
 }
