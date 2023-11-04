@@ -11,7 +11,7 @@ export default function ToggleBtn({disabled=false,isOn=false,onClick}:ToggleBtnP
         <div 
             onClick={onClick}
             className={`
-            relative w-[32px] h-[16px] rounded-full ${isOn?"bg-primary":"bg-slate-200 border"}
+            relative w-[32px] h-[16px] rounded-full ${isOn?"bg-primary":"bg-slate-400 dark:bg-slate-400  border border-slate-300"}
             cursor-pointer ${disabled&&"opacity-60"} self-center mr-3
         `}>
             <div className={`
