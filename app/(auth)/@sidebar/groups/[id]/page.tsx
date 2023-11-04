@@ -12,6 +12,7 @@ import AuthService from "@/services/authService";
 import { TypeErrorRes, TypeSuccessRes } from "@/types/api";
 import { logout } from "@/store/authStore";
 import { useRouter, useSearchParams } from "next/navigation";
+import useUser from "@/hooks/useUser";
 
 export default function ChatSidebar({params}:{params:{id:string}}){
     const dispatch = useDispatch();
@@ -22,7 +23,8 @@ export default function ChatSidebar({params}:{params:{id:string}}){
         }
     },[data]);
     const searchParams = useSearchParams()
-    const router = useRouter()
+    const router = useRouter();
+    const user = useUser();
     return(
         <div className="h-full w-full dark:bg-dark bg-light border-r-2 border-black/10">
             <div className="h-[65px] w-full flex items-center justify-start px-6 mb-6">

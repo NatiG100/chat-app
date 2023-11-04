@@ -9,6 +9,7 @@ import { useState } from "react"
 import useUser from "@/hooks/useUser"
 import UserService from "@/services/userService"
 import Admin from "@/components/group/Admin"
+import {useFetchAdmins} from "@/services/useGroupService";
 
 export default function GroupAdmins({groupId}:{groupId:number}){
     //state logic to control add member modal visibility
@@ -20,35 +21,7 @@ export default function GroupAdmins({groupId}:{groupId:number}){
         setShowAddAdmin(false);
     }
 
-    //get user data
-    const user = useUser();
-
-    //api call to group members
-    const {
-        data:admins,
-        isLoading,
-        isError,
-        refetch:refetchAdmins,
-    } = useQuery<TypeFetchAdminsRes,TypeErrorRes>(
-        ["fetchAdmins",groupId],
-        ()=>GroupService.fetchGroupAdmins(groupId),
-    );
-    function isUserSuperAdmin(){
-        if(user&&admins){
-            return admins.superAdmin.id===user.id;
-        }
-    };
-    function canUserDo (requiredPermission:permissions){
-        if(isUserSuperAdmin()) return true;
-        if(admins&&user){
-            let foundAdmin = admins.admins.filter((admin)=>(admin.user.id===user.id));
-            if(foundAdmin.length===0)return false;
-            return foundAdmin[0].permissions.filter(
-                (permission)=>(permission.value===requiredPermission)
-            ).length!==0;
-        }
-        return false;
-    };
+    const {data:admins,isLoading,isError,refetch:refetchAdmins,canUserDo} = useFetchAdmins(groupId);
 
     //mutations to handle permission change
     const revokeMutation = useMutation<TypeSuccessRes,TypeErrorRes,PermissionParams>(['changePermission'],GroupService.revokePermission);
