@@ -10,7 +10,7 @@ export type TypePermissionDetail = {
     permission:permissions,
     title:string,
     description:string,
-    id:number
+    id:number,
 }
 
 export const permissiosDetail:TypePermissionDetail[]= [
@@ -19,6 +19,7 @@ export const permissiosDetail:TypePermissionDetail[]= [
         title:"Add Member",
         description:"Admins with this permission in a group can add members to that group.",
         id:1,
+        
     },
     {
         permission:permissions.CHANGE_MEMBER_STATUS,

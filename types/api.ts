@@ -73,7 +73,7 @@ export type TypeFetchMembersRes = {
 }
 export type TypePermission = {
     id:number,
-    value:permissions
+    value:string
 }
 export type TypeFetchAdminsRes = {
     admins: {

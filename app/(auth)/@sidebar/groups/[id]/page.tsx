@@ -9,10 +9,11 @@ import {MdOutlineLogout} from 'react-icons/md'
 import { useDispatch } from "react-redux";
 import {useMutation} from 'react-query'
 import AuthService from "@/services/authService";
-import { TypeErrorRes, TypeSuccessRes } from "@/types/api";
+import { TypeErrorRes, TypeSuccessRes, permissions } from "@/types/api";
 import { logout } from "@/store/authStore";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUser from "@/hooks/useUser";
+import { useFetchAdmins } from "@/services/useGroupService";
 
 export default function ChatSidebar({params}:{params:{id:string}}){
     const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export default function ChatSidebar({params}:{params:{id:string}}){
     },[data]);
     const searchParams = useSearchParams()
     const router = useRouter();
-    const user = useUser();
+    const {canUserDo,isUserSuperAdmin} = useFetchAdmins(parseInt(params.id));
     return(
         <div className="h-full w-full dark:bg-dark bg-light border-r-2 border-black/10">
             <div className="h-[65px] w-full flex items-center justify-start px-6 mb-6">
@@ -48,20 +49,26 @@ export default function ChatSidebar({params}:{params:{id:string}}){
                 <FaUser/>
                 <p>Members</p>
             </ListButton>
-            <ListButton 
-                selected={searchParams.get('tab')==="admins"} 
-                attr={{onClick:()=>{router.replace(`/groups/${params.id}?tab=admins`)}}}
-            >
-                <RiAdminFill/>
-                <p>Admins</p>
-            </ListButton>
-            <ListButton 
-                selected={searchParams.get('tab')==="transfer"} 
-                attr={{onClick:()=>{router.replace(`/groups/${params.id}?tab=transfer`)}}}
-            >
-                <RiShakeHandsFill className="text-warning text-xl"/>
-                <p className="text-warning">Transfer Ownership</p>
-            </ListButton>
+            {
+                (canUserDo(permissions.FETCH_ADMINS)||isUserSuperAdmin())&&
+                <ListButton 
+                    selected={searchParams.get('tab')==="admins"} 
+                    attr={{onClick:()=>{router.replace(`/groups/${params.id}?tab=admins`)}}}
+                >
+                    <RiAdminFill/>
+                    <p>Admins</p>
+                </ListButton>
+            }
+            {
+                isUserSuperAdmin()&&
+                <ListButton 
+                    selected={searchParams.get('tab')==="transfer"} 
+                    attr={{onClick:()=>{router.replace(`/groups/${params.id}?tab=transfer`)}}}
+                >
+                    <RiShakeHandsFill className="text-warning text-xl"/>
+                    <p className="text-warning">Transfer Ownership</p>
+                </ListButton>
+            }
         </div>
     )
 }
