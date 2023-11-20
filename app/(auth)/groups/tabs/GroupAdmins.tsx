@@ -61,6 +61,7 @@ export default function GroupAdmins({groupId}:{groupId:number}){
                         revokeMutation={revokeMutation}
                         grantMutation={grantMutation}
                         refetch={reflectChanges}
+                        context={{canChangePermission:canUserDo(permissions.CHANGE_ADMIN_STATUS)}}
                     />
                 ))}
                 {

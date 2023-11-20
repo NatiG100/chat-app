@@ -10,11 +10,12 @@ import { useState } from "react";
 import { UseMutationResult, } from "react-query";
 
 export default function Admin({
-    user,permissions,showActions,groupId,revokeMutation,grantMutation,refetch
+    user,permissions,showActions,groupId,revokeMutation,grantMutation,context,refetch
 }:TypeAdmin&{
     showActions:boolean,groupId:number,
     revokeMutation:UseMutationResult<TypeSuccessRes,TypeErrorRes,PermissionParams>,
     grantMutation:UseMutationResult<TypeSuccessRes,TypeErrorRes,PermissionParams>,
+    context?:any,
     refetch:()=>void
 }){
     const [showPermissionsModal,setShowPermissionsModal] = useState(false);
@@ -79,7 +80,7 @@ export default function Admin({
                             <Permission 
                                 permission={per} 
                                 userHasPermission={permissions.filter((permission)=>(permission.id===per.id))[0]&&true}
-                                disabled={isRevokeLoading||isGrantLoading}
+                                disabled={isRevokeLoading||isGrantLoading||!context.canChangePermission}
                                 onToggle={()=>{handleOnTogglePermission(per.id)}}
                             />
                         ))

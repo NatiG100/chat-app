@@ -12,7 +12,7 @@ export default function ToggleBtn({disabled=false,isOn=false,onClick}:ToggleBtnP
             onClick={onClick}
             className={`
             relative w-[32px] h-[16px] rounded-full ${isOn?"bg-primary":"bg-slate-400 dark:bg-slate-400  border border-slate-300"}
-            cursor-pointer ${disabled&&"opacity-60"} self-center mr-3
+            ${disabled?" opacity-60 cursor-not-allowed":" cursor-pointer"} self-center mr-3 
         `}>
             <div className={`
                 absolute ${isOn?"right-0 top-[-1px]":"left-0 top-[-2px]"}  
