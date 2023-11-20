@@ -14,8 +14,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       animation:{
-        'slide-in':'slide-in 100ms ease-in 1',
-        'slide-out':'slide-out 100ms ease-in 1 forwards',
+        'slide-in':'slide-in 200ms ease-in 1 forwards',
+        'slide-out':'slide-out 200ms ease-in 1 forwards',
       },
       colors:{
         'dark':"#1D232F",

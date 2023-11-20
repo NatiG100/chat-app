@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode, useEffect } from "react"
 import Backdrop from "../surfaces/Backdrop"
 import useAnimateOnWillUnmount from "@/hooks/useAnimateOnWillUnmount"
+import BaseButton from "../uiElements/buttons/BaseButton"
 
 type TypeLayoutProps = {
     sidebar:ReactNode,
@@ -20,11 +21,11 @@ export default function Layout({sidebar,body,sidebarOpen,closeSideBar}:TypeLayou
                 {sidebar}
             </div>
             {shouldRender&&<Backdrop 
-                className={`block md:hidden ${show?'animate-slide-in':'animate-slide-out'}`} 
+                className={`block md:hidden `} 
                 onClose={closeSideBar}
                 onAnimationEnd={onAnimationEnd}
             >
-                <div className="w-full max-w-md h-full" onClick={(e)=>{e.stopPropagation()}}>
+                <div className={`w-full max-w-md h-full ${show?'animate-slide-in':'animate-slide-out'}`} onClick={(e)=>{e.stopPropagation()}}>
                     {sidebar}
                 </div>
             </Backdrop>}

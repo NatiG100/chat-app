@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import {FaUser} from 'react-icons/fa'
 import {BiSolidGroup,BiPlus} from 'react-icons/bi'
-import {MdClose,MdCheck} from 'react-icons/md'
+import {MdClose,MdCheck,MdOutlineCancel, MdCancel } from 'react-icons/md'
 import { useMutation, useQuery } from "react-query";
 import UserService from "@/services/userService";
 import { ChatsRes, CreateGroup, MultiResponse, TypeErrorRes } from "@/types/api";
@@ -26,9 +26,13 @@ import Textarea from "@/components/uiElements/Textarea";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import useCustomParams, { useManipQuery } from "@/hooks/navigationHooks/useCustomParams";
+import BaseButton from "@/components/uiElements/buttons/BaseButton";
+import { useDispatch } from "react-redux";
+import { closeSidebar } from "@/store/layoutSlice";
 
 
 export default function ChatSidebar(){
+    const dispatch = useDispatch();
     //search string
     const [query,setQuery] = useState<string>("");
     const debouncedQuery = useDebounce(query,700);
@@ -92,6 +96,14 @@ export default function ChatSidebar(){
                 />
             </div>
             <div className="h-screen grid grid-rows-[65px,1fr]">
+                <BaseButton 
+                    attr={{
+                        className:"self-end rounded-full w-max ml-auto mr-3 md:hidden",
+                        onClick:()=>{dispatch(closeSidebar())}
+                    }}
+                >
+                    <MdCancel className="text-red-400 h-7 w-7 opacity-40 hover:opacity-100" />
+                </BaseButton>
                 <div className="h-[65px] w-full flex items-baseline justify-center px-4 mb-6">
                     <LineTextfield attr={{placeholder:"Search",value:query,onChange:(e)=>{setQuery(e.target.value)}}}/>
                 </div>
