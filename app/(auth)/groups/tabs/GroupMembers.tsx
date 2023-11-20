@@ -6,8 +6,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query"
 import {BiPlus} from 'react-icons/bi'
 import Modal from "@/components/uiElements/Modal"
 import { useState } from "react"
-import useUser from "@/hooks/useUser"
 import UserService from "@/services/userService"
+import { useFetchAdmins } from "@/services/useGroupService"
 
 export default function GroupMembers({groupId}:{groupId:number}){
     //state logic to control add member modal visibility
@@ -20,7 +20,6 @@ export default function GroupMembers({groupId}:{groupId:number}){
     }
 
     //get user data
-    const user = useUser();
 
     //api call to group members
     const {
@@ -32,22 +31,7 @@ export default function GroupMembers({groupId}:{groupId:number}){
         ["fetchMembers",groupId],
         ()=>GroupService.fetchGroupMembers(groupId),
     );
-    function isUserSuperAdmin(){
-        if(user&&members){
-            return members.superAdmin.id===user.id;
-        }
-    };
-    function canUserDo (requiredPermission:permissions){
-        if(isUserSuperAdmin()) return true;
-        else if(members&&user){
-            let foundAdmin = members.admins.filter((admin)=>(admin.userId===user.id));
-            if(foundAdmin.length===0)return false;
-            return foundAdmin[0].permissions.filter(
-                (permission)=>(permission.permission===requiredPermission)
-            ).length!==0;
-        }
-        return false;
-    };
+    const {canUserDo} = useFetchAdmins(groupId);
 
     //api call to block and unblock user
     const {
