@@ -2,13 +2,16 @@ import Textarea from "@/components/uiElements/Textarea";
 import Input from "@/components/uiElements/Textfield";
 import Button from "@/components/uiElements/buttons";
 import GroupService from "@/services/groupService";
-import { TypeErrorRes, TypeSuccessRes, UpdateGroup } from "@/types/api";
+import { useFetchAdmins } from "@/services/useGroupService";
+import { TypeErrorRes, TypeSuccessRes, UpdateGroup, permissions } from "@/types/api";
 import { TypeGroup } from "@/types/enteties";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 
 export default function GroupProfile({groupId}:{groupId:number}){
+    const {isUserSuperAdmin} = useFetchAdmins(groupId);
+    const canUserUpdateProfile = isUserSuperAdmin();
 
     //fetch group
     const {
@@ -51,7 +54,8 @@ export default function GroupProfile({groupId}:{groupId:number}){
                     attr={{
                         placeholder:"Group Name",
                         id:"groupName",
-                        ...register("name",{required:"Name is a required field"})
+                        ...register("name",{required:"Name is a required field"}),
+                        disabled:!canUserUpdateProfile
                     }}
                     text="Group Name *"
                     error={errors.name?.message}
@@ -69,6 +73,7 @@ export default function GroupProfile({groupId}:{groupId:number}){
                         placeholder:"A short description for the group",
                         onResize:()=>{},
                         ...register("description"),
+                        disabled:!canUserUpdateProfile
                         
                     }}
                     text="Description"
@@ -78,9 +83,11 @@ export default function GroupProfile({groupId}:{groupId:number}){
                 </p>
                 {/* <p className="text-sm md:text-base text-light-text dark:text-gray-200  my-3">Profile Image</p> */}
                 {/* <SingleImageUpload img={image} setImg={setImage} setFile={setImageFile}/> */}
-                <div className="w-full max-w-[230px] float-right">
-                    <Button attr={{disabled:isLoading}}>Save changes</Button>
-                </div>
+                {canUserUpdateProfile&&
+                    <div className="w-full max-w-[230px] float-right">
+                        <Button attr={{disabled:isLoading}}>Save changes</Button>
+                    </div>
+                }
             </form>
         </div> 
     )
