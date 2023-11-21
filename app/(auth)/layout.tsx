@@ -10,6 +10,7 @@ import {MdArrowBack} from 'react-icons/md'
 import usePageTitle from '@/hooks/usePageTitle'
 import { useRouter } from 'next/navigation'
 import useAuthRedirector from '@/hooks/useAuthRedirector'
+import Loading from '@/components/uiElements/Loading'
 
 
 export default function AuthLayout({children,sidebar}:{
@@ -20,7 +21,8 @@ export default function AuthLayout({children,sidebar}:{
   const dispatch = useDispatch<AppDispath>()
   const title = usePageTitle();
   const router = useRouter();
-  useAuthRedirector("auth");
+  const {loading} = useAuthRedirector("auth");
+  if(loading) return <Loading/>
   return(
       <Layout
         body={

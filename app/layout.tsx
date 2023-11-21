@@ -11,6 +11,8 @@ import AuthService from "@/services/authService";
 import { TypeUser } from "@/types/enteties";
 import { TypeErrorRes } from "@/types/api";
 import { login } from "@/store/authStore";
+import {savePath} from '@/utils';
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -48,7 +50,11 @@ function RootLayout({children}:{children:ReactNode}){
         if(data){
             dispatch(login(data))
         }
-    },[data])
+    },[data]);
+    const path = usePathname();
+    useEffect(()=>{
+        return ()=>{savePath(path)}
+    },[path])
     return (
         <html lang="en" className={preference.theme}>
             <body className={inter.className}>

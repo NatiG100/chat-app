@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import useAuthRedirector from "@/hooks/useAuthRedirector";
 import { useDispatch } from "react-redux";
 import {login as loginAction} from '@/store/authStore'
+import Loading from "@/components/uiElements/Loading";
 
 export default function Login(){
     const {
@@ -31,7 +32,8 @@ export default function Login(){
             dispatch(loginAction(data));
         }
     },[data])
-    useAuthRedirector("unauth");
+    const {loading} = useAuthRedirector("unauth");
+    if(loading) return <Loading/>
     return(
         <>
             <p className="text-primary text-lg md:text-xl mb-6">Login</p>

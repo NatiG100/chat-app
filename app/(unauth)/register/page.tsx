@@ -1,4 +1,5 @@
 "use client"
+import Loading from "@/components/uiElements/Loading";
 import Input from "@/components/uiElements/Textfield";
 import Button from "@/components/uiElements/buttons";
 import useAuthRedirector from "@/hooks/useAuthRedirector";
@@ -20,7 +21,8 @@ export default function Register(){
     const onRegister = (user:TypeUser)=>{
         reqRegister(user);
     }
-    useAuthRedirector("unauth");
+    const {loading} = useAuthRedirector("unauth");
+    if(loading) return <Loading/>
     return(
         <>
             <p className="text-primary text-lg md:text-xl mb-6">Register</p>
