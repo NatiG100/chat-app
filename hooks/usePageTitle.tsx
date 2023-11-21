@@ -5,12 +5,12 @@ export default function(){
     const pathname = usePathname();
     useEffect(()=>{
         if(pathname){
-            switch(pathname){
-                case "/settings":
-                    setTitle("Settings")
-                    break;
-                default:
-                    setTitle("")
+            if(pathname.includes("/settings")){
+                setTitle("User Settings")
+            }else if(pathname.includes("/groups")){
+                setTitle("Group Settings")
+            }else{
+                setTitle("")
             }
         }
     },[pathname])
