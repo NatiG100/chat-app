@@ -11,8 +11,8 @@ import AuthService from "@/services/authService";
 import { TypeUser } from "@/types/enteties";
 import { TypeErrorRes } from "@/types/api";
 import { login } from "@/store/authStore";
-import {savePath} from '@/utils';
-import { usePathname } from "next/navigation";
+import {savePath, saveQuery} from '@/utils';
+import { usePathname, useSearchParams } from "next/navigation";
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -52,9 +52,13 @@ function RootLayout({children}:{children:ReactNode}){
         }
     },[data]);
     const path = usePathname();
+    const query = useSearchParams();
     useEffect(()=>{
-        return ()=>{savePath(path)}
-    },[path])
+        return ()=>{
+            savePath(path)
+            saveQuery(query.toString());
+        }
+    },[path,query])
     return (
         <html lang="en" className={preference.theme}>
             <body className={inter.className}>

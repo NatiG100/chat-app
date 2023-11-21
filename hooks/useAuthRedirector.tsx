@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import useUser from "./useUser";
 import { useEffect,useState } from "react";
-import { getPath } from "@/utils";
+import { getPath, getQuery } from "@/utils";
 
 export default function useAuthRedirector(pageType:"unauth"|"inactive"|"auth"){
     const router = useRouter();
@@ -18,10 +18,11 @@ export default function useAuthRedirector(pageType:"unauth"|"inactive"|"auth"){
                 case "ACTIVE":
                     if(pageType!=="auth"){
                         const path = getPath("/login");
+                        const query = getQuery();
                         if(path==="/login"||path==="/register"){
                             router.replace("/");
                         }else{
-                            router.replace(getPath("/"));
+                            router.replace(getPath("/")+query);
                         }
                     }
                     break;

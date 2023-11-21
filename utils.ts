@@ -10,3 +10,10 @@ export function savePath(path:string){
 export function getPath(defaultPath:string){
     return localStorage.getItem("path")||defaultPath;
 }
+
+export function saveQuery(query:string){
+    localStorage.setItem("query",query);
+}
+export function getQuery(){
+    return localStorage.getItem("query")||"";
+}

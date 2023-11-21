@@ -20,7 +20,7 @@ export default function useCustomParams(){
 }
 
 export function useManipQuery(){
-    const query = useSearchParams()
+    const query = useSearchParams();
     const manipQuery = useCallback((key:string,value?:string,queriesToRemove?:string[])=>{
       const params = new URLSearchParams(query as any);
         if(value){
