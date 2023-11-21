@@ -1,6 +1,6 @@
 import { permissions } from "./types/api";
 
-export const BASE_URL = "http://localhost:4000";
+export const BASE_URL = "http://172.20.101.174:4000";
 export const GET_IMG_URL = (imgId?:string)=>{
     if(!imgId){return undefined}
     return "https://ucarecdn.com/"+imgId+'/'

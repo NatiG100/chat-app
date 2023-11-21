@@ -1,19 +1,20 @@
 import { TypeUser } from "@/types/enteties";
 import { createSlice } from "@reduxjs/toolkit"
 
-type UserSliceState = TypeUser|null
-const initialState:UserSliceState=null as UserSliceState;
+type UserSliceState = Partial<TypeUser>&{loaded:boolean}
+const initialState:UserSliceState={loaded:true} as UserSliceState;
+
 
 const userSlice = createSlice({
     name:'user',
     initialState,
     reducers:{
         login:(state,action:{payload:TypeUser,type:string})=>{
-            state = action.payload
+            state = {...state,...action.payload}
             return state;
         },
         logout:(state,action:{payload:null|undefined,type:string})=>{
-            state =null;
+            state ={loaded:true};
             return state;
         }
     }
